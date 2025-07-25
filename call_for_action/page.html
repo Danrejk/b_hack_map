@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <style>
-        #map { height: 90vh; }
+        #map { height: 100vh; margin: 0; padding: 0; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
         .popup-title {
             font-weight: bold;
             font-size: 1.25em;
@@ -49,15 +55,14 @@
     </style>
 </head>
 <body>
-<h2>Call for Action Points in Germany</h2>
 <div id="map"></div>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="actions.js"></script>
 <script>
     var map = L.map('map').setView([51.1657, 10.4515], 6);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors & CartoDB'
     }).addTo(map);
 
     function getMarkerColor(type) {
@@ -75,31 +80,24 @@
     callForActions.forEach(function(point) {
         var marker = L.marker([point.lat, point.lng], {
             icon: L.divIcon({
-                className: 'exclamation-marker',
-                iconSize: [28, 36],
-                iconAnchor: [14, 18], // Centered (width/2, height/2)
-                popupAnchor: [0, -18],
+                className: 'circle-marker',
+                iconSize: [12, 12],
+                iconAnchor: [6, 6],
+                popupAnchor: [3, -12],
                 html: `<span
-        style="
-          color: ${getMarkerColor(point.type)};
-          font-size: 3em;
-          font-weight: bold;
-          line-height: 1;
-          font-family: Arial, sans-serif;
-          /* Crisp black outline from all sides */
-          text-shadow:
-            -2px -2px 0 #000,
-             2px -2px 0 #000,
-            -2px  2px 0 #000,
-             2px  2px 0 #000;
-          display: inline-block;
-          width: 100%;
-          text-align: center;
-        ">
-        !
-      </span>`
+          style="
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: ${getMarkerColor(point.type)};
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 1px #222;
+          ">
+        </span>`
             })
         }).addTo(map);
+
 
         var actionImage = point.image ? `<div class="popup-image" style="background-image: url('${point.image}'); width: 100%; height: 150px; background-size: cover; background-position: center;"></div><br/>` : '';
         var popupContent = `
