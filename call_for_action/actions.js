@@ -7,7 +7,8 @@ var callForActions = [
         dateEnd: '2025-08-02',
         description: '24-hour team coding and action for novel clean air solutions in Berlin.',
         lat: 52.52,
-        lng: 13.405
+        lng: 13.405,
+        image: "https://http.cat/images/100.jpg"
     },
     {
         type: 'Protest',
@@ -27,7 +28,8 @@ var callForActions = [
         dateEnd: '2025-09-05',
         description: 'Expert talks and workshops on innovative water conservation.',
         lat: 53.551,
-        lng: 9.994
+        lng: 9.994,
+        image: "https://http.cat/images/420.jpg"
     },
     {
         type: 'Cleanup',
