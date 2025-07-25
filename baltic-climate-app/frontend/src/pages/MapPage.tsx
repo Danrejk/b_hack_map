@@ -356,8 +356,152 @@ const MapPage: React.FC = () => {
           </div>
 
           {/* Legend */}
-          {/* Your existing legend JSX here (unchanged) */}
-          {/* ... (omitted for brevity, but include it from your current code) ... */}
+          <div className="mt-8 bg-gray-50 border border-gray-200 p-6">
+            <h3 className="text-lg font-light text-black mb-4">
+              Map Legend
+            </h3>
+            
+            {/* Climate Data Legends */}
+            {selectedDataTypes.map(dataType => (
+              <div key={dataType} className="mb-4">
+                <h4 className="text-md font-light text-black mb-2">
+                  {dataType.charAt(0).toUpperCase() + dataType.slice(1).replace('_', ' ')}
+                </h4>
+                <div className="flex flex-wrap gap-4">
+                  {dataType === 'temperature' && (
+                    <>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-red-500"></div>
+                        <span className="text-sm font-light">High (&gt; 16°C)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-yellow-500"></div>
+                        <span className="text-sm font-light">Moderate (12-16°C)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-blue-500"></div>
+                        <span className="text-sm font-light">Low (&lt; 12°C)</span>
+                      </div>
+                    </>
+                  )}
+                  {dataType === 'humidity' && (
+                    <>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-gray-800"></div>
+                        <span className="text-sm font-light">High (&gt; 75%)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-gray-600"></div>
+                        <span className="text-sm font-light">Moderate (60-75%)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-gray-400"></div>
+                        <span className="text-sm font-light">Low (&lt; 60%)</span>
+                      </div>
+                    </>
+                  )}
+                  {dataType === 'wind_speed' && (
+                    <>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-black"></div>
+                        <span className="text-sm font-light">Strong (&gt; 15 km/h)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-gray-600"></div>
+                        <span className="text-sm font-light">Moderate (10-15 km/h)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-gray-300"></div>
+                        <span className="text-sm font-light">Light (&lt; 10 km/h)</span>
+                      </div>
+                    </>
+                  )}
+                  {dataType === 'precipitation' && (
+                    <>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-blue-600"></div>
+                        <span className="text-sm font-light">High (&gt; 3mm)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-blue-400"></div>
+                        <span className="text-sm font-light">Moderate (1-3mm)</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 bg-blue-200"></div>
+                        <span className="text-sm font-light">Low (&lt; 1mm)</span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* Actions Legend */}
+            {showActions && (
+              <div className="pt-4 border-t border-gray-200">
+                <h4 className="text-md font-light text-black mb-2">Environmental Actions</h4>
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#ec4899' }}></div>
+                    <span className="text-sm font-light">Protests</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#10b981' }}></div>
+                    <span className="text-sm font-light">Cleanups</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#3b82f6' }}></div>
+                    <span className="text-sm font-light">Workshops</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#f59e0b' }}></div>
+                    <span className="text-sm font-light">Seminars</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#8b5cf6' }}></div>
+                    <span className="text-sm font-light">Festivals</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#06b6d4' }}></div>
+                    <span className="text-sm font-light">Training</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Sea Level Rise Heatmap Legend */}
+            {showSeaLevelRise && (
+              <div className="pt-4 border-t border-gray-200">
+                <h4 className="text-md font-light text-black mb-2">Sea Level Rise Heatmap</h4>
+                <div className="flex flex-wrap gap-4 mb-2">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4" style={{ backgroundColor: '#3b82f6' }}></div>
+                    <span className="text-sm font-light">Low (0.1-0.3m)</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4" style={{ backgroundColor: '#06b6d4' }}></div>
+                    <span className="text-sm font-light">Low-Medium (0.3-0.5m)</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4" style={{ backgroundColor: '#10b981' }}></div>
+                    <span className="text-sm font-light">Medium (0.5-0.6m)</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4" style={{ backgroundColor: '#f59e0b' }}></div>
+                    <span className="text-sm font-light">High (0.6-0.8m)</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4" style={{ backgroundColor: '#ef4444' }}></div>
+                    <span className="text-sm font-light">Very High (0.8-0.9m)</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 font-light">
+                  Heatmap showing projected sea level rise across the Baltic Sea region. 
+                  Data includes 142 measurement points with rises ranging from 0.1m to 0.89m.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
   );
