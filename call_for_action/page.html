@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Call for Action Map Mockup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <style>
+        #map { height: 90vh; }
+        .popup-title {
+            font-weight: bold;
+            font-size: 1.25em;
+            margin-bottom: 2px;
+        }
+        .popup-type {
+            color: #888;
+            font-size: 0.95em;
+            margin-bottom: 6px;
+        }
+        .popup-organizer {
+            color: #aaa;
+            font-size: 0.91em;
+            margin-top: 0px;
+            margin-bottom: 1px;
+        }
+        .popup-dates {
+            color: #bbb;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+        .popup-desc {
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+        .popup-button {
+            display: inline-block;
+            background-color: #2458a2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 13px;
+            font-size: 1em;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .popup-button:hover {
+            background-color: #12335c;
+        }
+    </style>
+</head>
+<body>
+<h2>Call for Action Points in Germany</h2>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="actions.js"></script>
+<script>
+    var map = L.map('map').setView([51.1657, 10.4515], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    function getMarkerColor(type) {
+        switch ((type || '').toLowerCase()) {
+            case 'protest':   return 'red';
+            case 'cleanup':   return 'green';
+            case 'workshop':  return 'blue';
+            case 'seminar':   return 'orange';
+            case 'festival':  return 'purple';
+            case 'training':  return 'teal';
+            default:          return 'gray';
+        }
+    }
+
+    callForActions.forEach(function(point) {
+        var marker = L.circleMarker([point.lat, point.lng], {
+            radius: 10,
+            fillColor: getMarkerColor(point.type),
+            color: "#333",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.95
+        }).addTo(map);
+
+        var popupContent = `
+        <div class="popup-title">${point.name}</div>
+        <div class="popup-type">${point.type}</div>
+        <br />
+        <div class="popup-organizer">${point.organizer}</div>
+        <div class="popup-dates">${point.dateStart} - ${point.dateEnd}</div>
+        <div class="popup-desc">${point.description}</div>
+        <button class="popup-button" onclick="alert('Read more for: ${point.name}')">READ MORE</button>
+      `;
+        marker.bindPopup(popupContent);
+    });
+</script>
+</body>
+</html>
