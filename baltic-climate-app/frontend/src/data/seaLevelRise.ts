@@ -1,0 +1,188 @@
+// Sea Level Rise Data for Baltic Region
+// Each point contains [latitude, longitude, sea_level_rise_in_meters]
+
+export interface SeaLevelRisePoint {
+  lat: number;
+  lng: number;
+  value: number; // Sea level rise in meters
+}
+
+// Convert the original data to a more structured format
+export const seaLevelRiseData: SeaLevelRisePoint[] = [
+  { lat: 58.5473, lng: 22.5374, value: 0.55 },
+  { lat: 56.702, lng: 14.5111, value: 0.48 },
+  { lat: 59.8083, lng: 15.5011, value: 0.58 },
+  { lat: 56.0716, lng: 19.3376, value: 0.32 },
+  { lat: 59.5181, lng: 14.1939, value: 0.13 },
+  { lat: 57.3849, lng: 25.6527, value: 0.38 },
+  { lat: 60.6865, lng: 25.832, value: 0.88 },
+  { lat: 57.6067, lng: 19.8606, value: 0.6 },
+  { lat: 55.2846, lng: 19.4603, value: 0.3 },
+  { lat: 58.7467, lng: 23.9235, value: 0.17 },
+  { lat: 55.9024, lng: 14.2977, value: 0.43 },
+  { lat: 60.0917, lng: 23.9426, value: 0.36 },
+  { lat: 58.2559, lng: 10.0095, value: 0.83 },
+  { lat: 55.7004, lng: 23.322, value: 0.18 },
+  { lat: 57.1306, lng: 19.5823, value: 0.84 },
+  { lat: 57.3672, lng: 18.7485, value: 0.59 },
+  { lat: 58.8997, lng: 11.0019, value: 0.62 },
+  { lat: 59.9694, lng: 15.6098, value: 0.37 },
+  { lat: 57.9346, lng: 15.8351, value: 0.89 },
+  { lat: 54.7217, lng: 22.8304, value: 0.74 },
+  { lat: 57.9217, lng: 10.1868, value: 0.87 },
+  { lat: 55.5275, lng: 23.9535, value: 0.74 },
+  { lat: 58.9907, lng: 22.8074, value: 0.89 },
+  { lat: 57.2593, lng: 17.6444, value: 0.33 },
+  { lat: 56.1704, lng: 25.0297, value: 0.68 },
+  { lat: 57.3804, lng: 21.3652, value: 0.75 },
+  { lat: 58.646, lng: 15.5409, value: 0.71 },
+  { lat: 55.3932, lng: 16.4805, value: 0.78 },
+  { lat: 60.1977, lng: 19.1876, value: 0.25 },
+  { lat: 54.0388, lng: 11.6608, value: 0.75 },
+  { lat: 53.5985, lng: 18.1017, value: 0.5 },
+  { lat: 60.5202, lng: 22.1767, value: 0.83 },
+  { lat: 54.1602, lng: 23.0621, value: 0.11 },
+  { lat: 60.1399, lng: 19.325, value: 0.42 },
+  { lat: 53.2769, lng: 10.8965, value: 0.87 },
+  { lat: 54.5808, lng: 24.7724, value: 0.51 },
+  { lat: 58.6762, lng: 21.0579, value: 0.73 },
+  { lat: 53.754, lng: 13.3455, value: 0.29 },
+  { lat: 56.7652, lng: 25.1571, value: 0.44 },
+  { lat: 59.7813, lng: 21.3477, value: 0.48 },
+  { lat: 58.5031, lng: 15.2173, value: 0.22 },
+  { lat: 60.9061, lng: 12.4333, value: 0.59 },
+  { lat: 57.576, lng: 19.4279, value: 0.18 },
+  { lat: 56.0292, lng: 12.2969, value: 0.76 },
+  { lat: 60.2612, lng: 17.7318, value: 0.11 },
+  { lat: 58.3065, lng: 18.0424, value: 0.24 },
+  { lat: 57.7402, lng: 16.5202, value: 0.5 },
+  { lat: 54.3186, lng: 20.5729, value: 0.33 },
+  { lat: 54.4342, lng: 16.0636, value: 0.8 },
+  { lat: 54.0534, lng: 16.1357, value: 0.31 },
+  { lat: 57.452, lng: 23.3809, value: 0.41 },
+  { lat: 55.7944, lng: 25.2028, value: 0.81 },
+  { lat: 58.2004, lng: 11.9433, value: 0.1 },
+  { lat: 56.9279, lng: 20.217, value: 0.84 },
+  { lat: 55.2866, lng: 16.8314, value: 0.36 },
+  { lat: 54.9043, lng: 13.4902, value: 0.15 },
+  { lat: 53.4144, lng: 24.1237, value: 0.39 },
+  { lat: 60.9501, lng: 15.9308, value: 0.58 },
+  { lat: 59.2932, lng: 24.91, value: 0.11 },
+  { lat: 53.008, lng: 14.0659, value: 0.73 },
+  { lat: 57.3989, lng: 11.9026, value: 0.82 },
+  { lat: 60.0584, lng: 20.9628, value: 0.75 },
+  { lat: 55.0075, lng: 12.3533, value: 0.11 },
+  { lat: 60.6104, lng: 16.2597, value: 0.89 },
+  { lat: 60.6869, lng: 10.0114, value: 0.11 },
+  { lat: 60.9026, lng: 19.2631, value: 0.69 },
+  { lat: 55.3723, lng: 13.6049, value: 0.81 },
+  { lat: 54.9156, lng: 21.2567, value: 0.68 },
+  { lat: 54.9902, lng: 23.6942, value: 0.13 },
+  { lat: 58.105, lng: 25.7923, value: 0.7 },
+  { lat: 54.1309, lng: 10.7726, value: 0.31 },
+  { lat: 55.8742, lng: 13.6413, value: 0.86 },
+  { lat: 57.1969, lng: 14.3848, value: 0.33 },
+  { lat: 60.9406, lng: 13.065, value: 0.35 },
+  { lat: 58.7024, lng: 20.0504, value: 0.74 },
+  { lat: 54.2065, lng: 18.569, value: 0.58 },
+  { lat: 54.6596, lng: 13.5669, value: 0.56 },
+  { lat: 57.0113, lng: 14.4677, value: 0.3 },
+  { lat: 55.5147, lng: 10.3983, value: 0.83 },
+  { lat: 59.0686, lng: 17.1576, value: 0.89 },
+  { lat: 58.8142, lng: 25.1527, value: 0.29 },
+  { lat: 54.5965, lng: 16.1407, value: 0.81 },
+  { lat: 56.2101, lng: 14.2533, value: 0.87 },
+  { lat: 55.6658, lng: 12.4723, value: 0.44 },
+  { lat: 54.3904, lng: 23.4944, value: 0.28 },
+  { lat: 60.2953, lng: 13.1365, value: 0.54 },
+  { lat: 53.167, lng: 13.9254, value: 0.51 },
+  { lat: 55.1609, lng: 24.2193, value: 0.67 },
+  { lat: 58.6847, lng: 21.331, value: 0.77 },
+  { lat: 53.8021, lng: 24.432, value: 0.23 },
+  { lat: 57.9963, lng: 11.322, value: 0.23 },
+  { lat: 59.7234, lng: 19.3645, value: 0.29 },
+  { lat: 60.7954, lng: 20.4948, value: 0.32 },
+  { lat: 60.0991, lng: 10.0864, value: 0.45 },
+  { lat: 57.4738, lng: 22.7441, value: 0.35 },
+  { lat: 57.5672, lng: 20.1305, value: 0.78 },
+  { lat: 54.3729, lng: 23.5703, value: 0.73 },
+  { lat: 60.5804, lng: 25.4227, value: 0.48 },
+  { lat: 58.3552, lng: 24.8692, value: 0.39 },
+  { lat: 58.3, lng: 19.1585, value: 0.36 },
+  { lat: 54.4119, lng: 15.9443, value: 0.15 },
+  { lat: 56.2295, lng: 19.0, value: 0.69 },
+  { lat: 57.8864, lng: 22.723, value: 0.53 },
+  { lat: 54.638, lng: 17.8118, value: 0.75 },
+  { lat: 53.0283, lng: 14.5858, value: 0.34 },
+  { lat: 60.5849, lng: 24.9267, value: 0.63 },
+  { lat: 55.7779, lng: 21.8851, value: 0.14 },
+  { lat: 60.7876, lng: 20.8399, value: 0.19 },
+  { lat: 60.8234, lng: 25.7997, value: 0.15 },
+  { lat: 56.4567, lng: 25.3907, value: 0.75 },
+  { lat: 53.0248, lng: 13.5794, value: 0.24 },
+  { lat: 53.2778, lng: 11.2256, value: 0.81 },
+  { lat: 55.3011, lng: 10.3305, value: 0.86 },
+  { lat: 57.3194, lng: 14.2232, value: 0.21 },
+  { lat: 59.2214, lng: 25.2629, value: 0.41 },
+  { lat: 53.6095, lng: 16.3138, value: 0.28 },
+  { lat: 57.4931, lng: 12.8999, value: 0.34 },
+  { lat: 59.0039, lng: 17.4524, value: 0.49 },
+  { lat: 57.2059, lng: 23.8462, value: 0.39 },
+  { lat: 56.2778, lng: 18.8798, value: 0.51 },
+  { lat: 57.6687, lng: 14.0514, value: 0.36 },
+  { lat: 54.3255, lng: 13.0155, value: 0.11 },
+  { lat: 53.3524, lng: 23.9614, value: 0.45 },
+  { lat: 53.2778, lng: 10.4695, value: 0.39 },
+  { lat: 60.2841, lng: 18.2185, value: 0.52 },
+  { lat: 54.1782, lng: 24.9431, value: 0.29 },
+  { lat: 58.4221, lng: 25.7376, value: 0.19 },
+  { lat: 53.0866, lng: 12.8648, value: 0.63 },
+  { lat: 59.1842, lng: 24.5574, value: 0.87 },
+  { lat: 56.0186, lng: 11.2362, value: 0.29 },
+  { lat: 57.9795, lng: 18.4817, value: 0.23 },
+  { lat: 54.6128, lng: 14.6403, value: 0.15 },
+  { lat: 54.8801, lng: 25.47, value: 0.36 },
+  { lat: 60.9375, lng: 15.115, value: 0.49 },
+  { lat: 53.6224, lng: 24.9167, value: 0.28 },
+  { lat: 59.809, lng: 14.1812, value: 0.38 },
+  { lat: 53.587, lng: 22.6083, value: 0.77 },
+  { lat: 55.1966, lng: 21.3499, value: 0.36 },
+  { lat: 55.4483, lng: 17.3325, value: 0.23 },
+  { lat: 60.0638, lng: 19.5312, value: 0.16 },
+  { lat: 59.4158, lng: 19.418, value: 0.13 },
+  { lat: 60.6272, lng: 17.933, value: 0.88 },
+  { lat: 54.9529, lng: 12.884, value: 0.37 },
+  { lat: 59.3724, lng: 15.7372, value: 0.65 },
+  { lat: 60.3611, lng: 20.8586, value: 0.3 },
+  { lat: 59.4075, lng: 11.5648, value: 0.54 },
+  { lat: 54.1774, lng: 11.5747, value: 0.42 },
+  { lat: 55.9182, lng: 15.0932, value: 0.72 },
+  { lat: 53.7426, lng: 20.7976, value: 0.11 },
+  { lat: 55.0388, lng: 11.3451, value: 0.69 }
+];
+
+// Statistical information about the dataset
+export const seaLevelRiseStats = {
+  minValue: Math.min(...seaLevelRiseData.map(point => point.value)),
+  maxValue: Math.max(...seaLevelRiseData.map(point => point.value)),
+  averageValue: seaLevelRiseData.reduce((sum, point) => sum + point.value, 0) / seaLevelRiseData.length,
+  totalPoints: seaLevelRiseData.length
+};
+
+// Color scale for heatmap visualization
+export const getSeaLevelRiseColor = (value: number): string => {
+  // Normalize value between 0 and 1
+  const normalized = (value - seaLevelRiseStats.minValue) / (seaLevelRiseStats.maxValue - seaLevelRiseStats.minValue);
+  
+  // Color gradient from blue (low) to red (high)
+  if (normalized < 0.2) return '#0066CC'; // Deep blue
+  if (normalized < 0.4) return '#0080FF'; // Blue
+  if (normalized < 0.6) return '#66B3FF'; // Light blue
+  if (normalized < 0.8) return '#FFB366'; // Orange
+  return '#FF4444'; // Red
+};
+
+// Get intensity for heatmap (0-1 scale)
+export const getSeaLevelRiseIntensity = (value: number): number => {
+  return (value - seaLevelRiseStats.minValue) / (seaLevelRiseStats.maxValue - seaLevelRiseStats.minValue);
+};

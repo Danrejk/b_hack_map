@@ -5,6 +5,7 @@ import Navbar from './components/Layout/Navbar';
 import LandingPage from './pages/LandingPage';
 import MapPage from './pages/MapPage';
 import CallToActionPage from './pages/CallToActionPage';
+import ActionDetailPage from './pages/ActionDetailPage';
 import CreateActionPage from './pages/CreateActionPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
@@ -34,6 +35,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <CallToActionPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/action/:id" 
+              element={
+                <ProtectedRoute>
+                  <ActionDetailPage />
                 </ProtectedRoute>
               } 
             />

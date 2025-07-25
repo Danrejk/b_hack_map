@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Call for Action Map Mockup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <style>
+        #map { height: 100vh; margin: 0; padding: 0; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .popup-title {
+            font-weight: bold;
+            font-size: 1.25em;
+            margin-bottom: 2px;
+        }
+        .popup-type {
+            color: #888;
+            font-size: 0.95em;
+            margin-bottom: 6px;
+        }
+        .popup-organizer {
+            color: #aaa;
+            font-size: 0.91em;
+            margin-top: 0px;
+            margin-bottom: 1px;
+        }
+        .popup-dates {
+            color: #bbb;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+        .popup-desc {
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+        .popup-button {
+            display: inline-block;
+            background-color: #2458a2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 13px;
+            font-size: 1em;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .popup-button:hover {
+            background-color: #12335c;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="actions.js"></script>
+<script>
+    var map = L.map('map').setView([59.58, 19.78], 5);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors & CartoDB'
+    }).addTo(map);
+
+    function getMarkerColor(type) {
+        switch ((type || '').toLowerCase()) {
+            case 'protest':   return 'pink';
+            case 'cleanup':   return 'lightgreen';
+            case 'workshop':  return 'lightblue';
+            case 'seminar':   return 'orange';
+            case 'festival':  return 'purple';
+            case 'training':  return 'teal';
+            default:          return 'gray';
+        }
+    }
+
+    callForActions.forEach(function(point) {
+        var marker = L.marker([point.lat, point.lng], {
+            icon: L.divIcon({
+                className: 'circle-marker',
+                iconSize: [12, 12],
+                iconAnchor: [6, 6],
+                popupAnchor: [3, -12],
+                html: `<span
+          style="
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: ${getMarkerColor(point.type)};
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 1px #222;
+          ">
+        </span>`
+            })
+        }).addTo(map);
+
+
+        var actionImage = point.image ? `<div class="popup-image" style="background-image: url('${point.image}'); width: 100%; height: 150px; background-size: cover; background-position: center;"></div><br/>` : '';
+        var popupContent = `
+    <div class="popup-title">${point.name}</div>
+    <div class="popup-type">${point.type}</div>
+    <br />
+    ${actionImage}
+    <div class="popup-organizer">${point.organizer}</div>
+    <div class="popup-dates">${point.dateStart} - ${point.dateEnd}</div>
+    <div class="popup-desc">${point.description}</div>
+    <button class="popup-button" onclick="alert('Read more for: ${point.name}')">READ MORE</button>
+  `;
+        marker.bindPopup(popupContent);
+    });
+
+
+</script>
+</body>
+</html>

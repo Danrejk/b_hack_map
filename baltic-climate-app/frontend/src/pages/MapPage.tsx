@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
-import { Thermometer, Droplets, Wind, AlertTriangle } from 'lucide-react';
+import { Thermometer, Droplets, Wind, AlertTriangle, Calendar, Users, TrendingUp } from 'lucide-react';
+import { callForActions, CallForAction } from '../data/callForActions';
+import { seaLevelRiseData, SeaLevelRisePoint } from '../data/seaLevelRise';
+import CallForActionMarker from '../components/CallForActionMarker';
+import HeatmapLayer from '../components/HeatmapLayer';
 import 'leaflet/dist/leaflet.css';
 
 // Fix for default markers in React-Leaflet
@@ -33,10 +37,19 @@ interface ClimateDataPoint {
 const MapPage: React.FC = () => {
   const [climateData, setClimateData] = useState<ClimateDataPoint[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedDataType, setSelectedDataType] = useState<string>('temperature');
+  const [selectedDataTypes, setSelectedDataTypes] = useState<string[]>(['temperature']);
+  const [showActions, setShowActions] = useState(true);
+  const [showSeaLevelRise, setShowSeaLevelRise] = useState(false);
 
   // Baltic Sea center coordinates
   const balticSeaCenter: LatLngExpression = [59.0, 19.0];
+
+  // Function to normalize sea level rise values for heatmap intensity (0-1)
+  const normalizeSeaLevelRise = (value: number) => {
+    const minValue = 0.1; // minimum sea level rise in the data
+    const maxValue = 0.89; // maximum sea level rise in the data
+    return Math.min(Math.max((value - minValue) / (maxValue - minValue), 0), 1);
+  };
 
   useEffect(() => {
     fetchClimateData();
@@ -103,8 +116,8 @@ const MapPage: React.FC = () => {
     }
   };
 
-  const getMarkerColor = (dataPoint: ClimateDataPoint) => {
-    switch (selectedDataType) {
+  const getMarkerColor = (dataPoint: ClimateDataPoint, dataType: string) => {
+    switch (dataType) {
       case 'temperature':
         if (dataPoint.temperature > 16) return '#ef4444'; // red - hot
         if (dataPoint.temperature > 12) return '#f59e0b'; // yellow - moderate
@@ -122,8 +135,8 @@ const MapPage: React.FC = () => {
     }
   };
 
-  const getValueByType = (dataPoint: ClimateDataPoint) => {
-    switch (selectedDataType) {
+  const getValueByType = (dataPoint: ClimateDataPoint, dataType: string) => {
+    switch (dataType) {
       case 'temperature':
         return `${dataPoint.temperature}°C`;
       case 'humidity':
@@ -176,26 +189,61 @@ const MapPage: React.FC = () => {
           {/* Data Type Selector */}
           <div className="bg-gray-50 border border-gray-200 p-6">
             <h3 className="text-lg font-light text-black mb-6">Data Visualization</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[
-                { key: 'temperature', label: 'Temperature', icon: 'temperature' },
-                { key: 'humidity', label: 'Humidity', icon: 'humidity' },
-                { key: 'wind_speed', label: 'Wind Speed', icon: 'wind_speed' },
-                { key: 'precipitation', label: 'Precipitation', icon: 'precipitation' }
-              ].map((option) => (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {[
+                  { key: 'temperature', label: 'Temperature', icon: 'temperature' },
+                  { key: 'humidity', label: 'Humidity', icon: 'humidity' },
+                  { key: 'wind_speed', label: 'Wind Speed', icon: 'wind_speed' },
+                  { key: 'precipitation', label: 'Precipitation', icon: 'precipitation' }
+                ].map((option) => (
+                  <button
+                    key={option.key}
+                    onClick={() => {
+                      if (selectedDataTypes.includes(option.key)) {
+                        setSelectedDataTypes(selectedDataTypes.filter(type => type !== option.key));
+                      } else {
+                        setSelectedDataTypes([...selectedDataTypes, option.key]);
+                      }
+                    }}
+                    className={`flex items-center space-x-2 px-4 py-3 transition-colors font-light ${
+                      selectedDataTypes.includes(option.key)
+                        ? 'bg-black text-white'
+                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                    }`}
+                  >
+                    {getIcon(option.icon)}
+                    <span>{option.label}</span>
+                  </button>
+                ))}
+              </div>
+              
+              {/* Actions and Sea Level Rise Toggles */}
+              <div className="pt-4 border-t border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-3">
                 <button
-                  key={option.key}
-                  onClick={() => setSelectedDataType(option.key)}
+                  onClick={() => setShowActions(!showActions)}
                   className={`flex items-center space-x-2 px-4 py-3 transition-colors font-light ${
-                    selectedDataType === option.key
-                      ? 'bg-black text-white'
+                    showActions
+                      ? 'bg-green-600 text-white'
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                   }`}
                 >
-                  {getIcon(option.icon)}
-                  <span>{option.label}</span>
+                  <Calendar className="h-5 w-5" />
+                  <span>Environmental Actions</span>
                 </button>
-              ))}
+                
+                <button
+                  onClick={() => setShowSeaLevelRise(!showSeaLevelRise)}
+                  className={`flex items-center space-x-2 px-4 py-3 transition-colors font-light ${
+                    showSeaLevelRise
+                      ? 'bg-red-600 text-white'
+                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                  }`}
+                >
+                  <TrendingUp className="h-5 w-5" />
+                  <span>Sea Level Rise Heatmap</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -213,45 +261,62 @@ const MapPage: React.FC = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               
-              {climateData.map((dataPoint) => (
-                <CircleMarker
-                  key={dataPoint.id}
-                  center={[dataPoint.latitude, dataPoint.longitude]}
-                  radius={12}
-                  fillColor={getMarkerColor(dataPoint)}
-                  color="#000000"
-                  weight={1}
-                  opacity={1}
-                  fillOpacity={0.8}
-                >
-                  <Popup>
-                    <div className="p-2">
-                      <h4 className="font-light text-lg mb-2">{dataPoint.location_name}</h4>
-                      <div className="space-y-1 text-sm">
-                        <div className="flex items-center space-x-2">
-                          <Thermometer className="h-4 w-4 text-gray-600" />
-                          <span className="font-light">Temperature: {dataPoint.temperature}°C</span>
+              {/* Climate Data Markers */}
+              {selectedDataTypes.map(dataType =>
+                climateData.map((dataPoint) => (
+                  <CircleMarker
+                    key={`${dataPoint.id}-${dataType}`}
+                    center={[dataPoint.latitude, dataPoint.longitude]}
+                    radius={12}
+                    fillColor={getMarkerColor(dataPoint, dataType)}
+                    color="#000000"
+                    weight={1}
+                    opacity={1}
+                    fillOpacity={0.8}
+                  >
+                    <Popup>
+                      <div className="p-2">
+                        <h4 className="font-light text-lg mb-2">{dataPoint.location_name}</h4>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex items-center space-x-2">
+                            <Thermometer className="h-4 w-4 text-gray-600" />
+                            <span className="font-light">Temperature: {dataPoint.temperature}°C</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Droplets className="h-4 w-4 text-gray-600" />
+                            <span className="font-light">Humidity: {dataPoint.humidity}%</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Wind className="h-4 w-4 text-gray-600" />
+                            <span className="font-light">Wind: {dataPoint.wind_speed} km/h</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Droplets className="h-4 w-4 text-gray-600" />
+                            <span className="font-light">Precipitation: {dataPoint.precipitation} mm</span>
+                          </div>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <Droplets className="h-4 w-4 text-gray-600" />
-                          <span className="font-light">Humidity: {dataPoint.humidity}%</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Wind className="h-4 w-4 text-gray-600" />
-                          <span className="font-light">Wind: {dataPoint.wind_speed} km/h</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Droplets className="h-4 w-4 text-gray-600" />
-                          <span className="font-light">Precipitation: {dataPoint.precipitation} mm</span>
+                        <div className="mt-2 text-xs text-gray-500 font-light">
+                          Last updated: {new Date(dataPoint.recorded_at).toLocaleString()}
                         </div>
                       </div>
-                      <div className="mt-2 text-xs text-gray-500 font-light">
-                        Last updated: {new Date(dataPoint.recorded_at).toLocaleString()}
-                      </div>
-                    </div>
-                  </Popup>
-                </CircleMarker>
+                    </Popup>
+                  </CircleMarker>
+                ))
+              )}
+
+              {/* Call for Action Markers */}
+              {showActions && callForActions.map((action, index) => (
+                <CallForActionMarker
+                  key={`action-${action.lat}-${action.lng}-${index}`}
+                  action={action}
+                />
               ))}
+
+              {/* Sea Level Rise Heatmap */}
+              <HeatmapLayer
+                data={seaLevelRiseData.map(point => [point.lat, point.lng, normalizeSeaLevelRise(point.value)])}
+                visible={showSeaLevelRise}
+              />
             </MapContainer>
           </div>
         </div>
@@ -259,58 +324,133 @@ const MapPage: React.FC = () => {
         {/* Legend */}
         <div className="mt-8 bg-gray-50 border border-gray-200 p-6">
           <h3 className="text-lg font-light text-black mb-4">
-            {selectedDataType.charAt(0).toUpperCase() + selectedDataType.slice(1).replace('_', ' ')} Legend
+            Map Legend
           </h3>
-          <div className="flex flex-wrap gap-4">
-            {selectedDataType === 'temperature' && (
-              <>
+          
+          {/* Climate Data Legends */}
+          {selectedDataTypes.map(dataType => (
+            <div key={dataType} className="mb-4">
+              <h4 className="text-md font-light text-black mb-2">
+                {dataType.charAt(0).toUpperCase() + dataType.slice(1).replace('_', ' ')}
+              </h4>
+              <div className="flex flex-wrap gap-4">
+                {dataType === 'temperature' && (
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-red-500"></div>
+                      <span className="text-sm font-light">High (&gt; 16°C)</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-yellow-500"></div>
+                      <span className="text-sm font-light">Moderate (12-16°C)</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-blue-500"></div>
+                      <span className="text-sm font-light">Low (&lt; 12°C)</span>
+                    </div>
+                  </>
+                )}
+                {dataType === 'humidity' && (
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-gray-800"></div>
+                      <span className="text-sm font-light">High (&gt; 75%)</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-gray-600"></div>
+                      <span className="text-sm font-light">Moderate (60-75%)</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-gray-400"></div>
+                      <span className="text-sm font-light">Low (&lt; 60%)</span>
+                    </div>
+                  </>
+                )}
+                {dataType === 'wind_speed' && (
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-black"></div>
+                      <span className="text-sm font-light">Strong (&gt; 15 km/h)</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-gray-600"></div>
+                      <span className="text-sm font-light">Moderate (10-15 km/h)</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-gray-300"></div>
+                      <span className="text-sm font-light">Light (&lt; 10 km/h)</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {/* Actions Legend */}
+          {showActions && (
+            <div className="pt-4 border-t border-gray-200">
+              <h4 className="text-md font-light text-black mb-2">Environmental Actions</h4>
+              <div className="flex flex-wrap gap-4">
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-red-500"></div>
-                  <span className="text-sm font-light">High (&gt; 16°C)</span>
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#ec4899' }}></div>
+                  <span className="text-sm font-light">Protests</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-yellow-500"></div>
-                  <span className="text-sm font-light">Moderate (12-16°C)</span>
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#10b981' }}></div>
+                  <span className="text-sm font-light">Cleanups</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-blue-500"></div>
-                  <span className="text-sm font-light">Low (&lt; 12°C)</span>
-                </div>
-              </>
-            )}
-            {selectedDataType === 'humidity' && (
-              <>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-gray-800"></div>
-                  <span className="text-sm font-light">High (&gt; 75%)</span>
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#3b82f6' }}></div>
+                  <span className="text-sm font-light">Workshops</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-gray-600"></div>
-                  <span className="text-sm font-light">Moderate (60-75%)</span>
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#f59e0b' }}></div>
+                  <span className="text-sm font-light">Seminars</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-gray-400"></div>
-                  <span className="text-sm font-light">Low (&lt; 60%)</span>
-                </div>
-              </>
-            )}
-            {selectedDataType === 'wind_speed' && (
-              <>
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-black"></div>
-                  <span className="text-sm font-light">Strong (&gt; 15 km/h)</span>
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#8b5cf6' }}></div>
+                  <span className="text-sm font-light">Festivals</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-gray-600"></div>
-                  <span className="text-sm font-light">Moderate (10-15 km/h)</span>
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#06b6d4' }}></div>
+                  <span className="text-sm font-light">Training</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Sea Level Rise Heatmap Legend */}
+          {showSeaLevelRise && (
+            <div className="pt-4 border-t border-gray-200">
+              <h4 className="text-md font-light text-black mb-2">Sea Level Rise Heatmap</h4>
+              <div className="flex flex-wrap gap-4 mb-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#3b82f6' }}></div>
+                  <span className="text-sm font-light">Low (0.1-0.3m)</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-gray-300"></div>
-                  <span className="text-sm font-light">Light (&lt; 10 km/h)</span>
+                  <div className="w-4 h-4" style={{ backgroundColor: '#06b6d4' }}></div>
+                  <span className="text-sm font-light">Low-Medium (0.3-0.5m)</span>
                 </div>
-              </>
-            )}
-          </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#10b981' }}></div>
+                  <span className="text-sm font-light">Medium (0.5-0.6m)</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#f59e0b' }}></div>
+                  <span className="text-sm font-light">High (0.6-0.8m)</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4" style={{ backgroundColor: '#ef4444' }}></div>
+                  <span className="text-sm font-light">Very High (0.8-0.9m)</span>
+                </div>
+              </div>
+              <p className="text-xs text-gray-600 font-light">
+                Heatmap showing projected sea level rise across the Baltic Sea region. 
+                Data includes 142 measurement points with rises ranging from 0.1m to 0.89m.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
