@@ -277,11 +277,12 @@ const MapPage: React.FC = () => {
           {/* Map Container */}
           <div className="bg-white border border-gray-200 overflow-hidden">
             <div className="h-[600px] w-full">
-              <MapContainer center={balticSeaCenter} zoom={6} className="h-full w-full">
+              <MapContainer center={balticSeaCenter} zoom={5} className="h-full w-full">
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; OpenStreetMap contributors & CartoDB'
+                    url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                 />
+
 
                 {/* Baltic Highlight Mask */}
                 {highlightFeature && (
