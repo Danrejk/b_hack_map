@@ -107,7 +107,6 @@ const Navbar: React.FC = () => {
                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-900 to-cyan-600 bg-clip-text text-transparent">
                   VisBaltic
                 </span>
-                <span className="text-xs text-blue-600 font-medium -mt-1">Solutions Platform</span>
               </div>
             </Link>
           </motion.div>
@@ -141,8 +140,12 @@ const Navbar: React.FC = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-2 rounded-xl">
-                      <User className="h-4 w-4 text-white" />
+                    <div className="w-8 h-8 rounded-xl overflow-hidden border-2 border-white shadow-sm">
+                      <img 
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJZbwM7nByiekCs8REVQg8jjYIs0Cbdh7HlgkMNgtalXKWv4cujKU3wZTRjxnLQXZvow4&usqp=CAU"
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <span className="text-blue-900 font-semibold">
                       {user?.first_name || user?.username}
