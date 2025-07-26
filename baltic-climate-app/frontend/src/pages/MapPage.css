@@ -1,0 +1,9 @@
+/* Prevent page scroll everywhere */
+body {
+    overflow: hidden;
+}
+
+/* Optional: higher‐z-index cursor for polygons if needed */
+.leaflet-container {
+    z-index: 0;
+}
