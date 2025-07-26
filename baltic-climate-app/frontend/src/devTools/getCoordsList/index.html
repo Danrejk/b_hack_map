@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Leaflet Map Click Coordinates (Local)</title>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css"
+    />
+    <style>
+        #map { height: 400px; width: 100%; }
+        #coords { margin-top: 10px; font-family: monospace; }
+    </style>
+</head>
+<body>
+<h1>Leaflet Map Click Coordinates (Local)</h1>
+<div id="map"></div>
+<h3>Clicked Coordinates:</h3>
+<ul id="coords"></ul>
+<button id="download">Download as coordinates.txt</button>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([52.2297, 21.0122], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const coordsList = document.getElementById('coords');
+    const downloadBtn = document.getElementById('download');
+    const allCoords = [];
+
+    map.on('click', function(e) {
+        const { lat, lng } = e.latlng;
+        const coordString = lat.toFixed(5) + ', ' + lng.toFixed(5);
+
+        // Add marker at clicked location
+        L.marker([lat, lng]).addTo(map);
+
+        // Add to visible list
+        const li = document.createElement('li');
+        li.textContent = coordString;
+        coordsList.appendChild(li);
+
+        // Add to internal array
+        allCoords.push(coordString);
+    });
+
+
+    // Download as text file
+    downloadBtn.addEventListener('click', function() {
+        const fileContent = allCoords.join('\n');
+        const blob = new Blob([fileContent], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'coordinates.txt';
+        a.click();
+        URL.revokeObjectURL(a.href);
+    });
+</script>
+</body>
+</html>
