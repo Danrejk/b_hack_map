@@ -229,11 +229,11 @@ const MapPage: React.FC = () => {
   const [climateData, setClimateData] = useState<ClimateDataPoint[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [selectedDataTypes, setSelectedDataTypes] = useState<string[]>(['temperature']);
+  const [selectedDataTypes, setSelectedDataTypes] = useState<string[]>([]);
   const [showActions, setShowActions] = useState(true);
   const [showSeaLevelRise, setShowSeaLevelRise] = useState(false);
   const [showPollutionDanger, setShowPollutionDanger] = useState(false);
-  const [showCorrosionRisk, setShowCorrosionRisk] = useState(false);
+  const [showCorrosionRisk, setShowCorrosionRisk] = useState(true);
   const [panelOpen, setPanelOpen] = useState(true);
 
   // New states for collapsible action types

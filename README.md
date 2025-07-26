@@ -20,74 +20,116 @@ This platform provides an intuitive, all-in-one climate action organizing experi
 ## Project Structure
 
 ```
-├── baltic-climate-app/          # Main application directory
-│   ├── backend/                 # Django REST API backend
-│   │   ├── manage.py           # Django management script
-│   │   ├── requirements.txt    # Python dependencies
-│   │   ├── db.sqlite3         # SQLite database
-│   │   ├── baltic_climate/    # Django project settings
-│   │   │   ├── settings.py    # Configuration and database setup
-│   │   │   ├── urls.py        # Main URL routing
-│   │   │   └── wsgi.py        # WSGI configuration
-│   │   ├── accounts/          # User authentication and profiles
-│   │   │   ├── models.py      # User model with activism tracking
-│   │   │   ├── views.py       # Authentication API endpoints
-│   │   │   ├── serializers.py # User data serialization
-│   │   │   └── urls.py        # Auth-related URL patterns
-│   │   ├── climate_data/      # Climate data models and API
-│   │   │   ├── models.py      # Climate data point, risk areas, weather data
-│   │   │   ├── views.py       # Climate data API endpoints
-│   │   │   ├── serializers.py # Climate data serialization
-│   │   │   └── urls.py        # Climate data URL patterns
-│   │   └── actions/           # Climate action management
-│   │       ├── models.py      # Action, participation, resource models
-│   │       ├── views.py       # Action management API endpoints
-│   │       ├── serializers.py # Action data serialization
-│   │       └── urls.py        # Action-related URL patterns
-│   └── frontend/              # React TypeScript frontend
-│       ├── package.json       # Node.js dependencies and scripts
-│       ├── tsconfig.json      # TypeScript configuration
-│       ├── tailwind.config.js # Tailwind CSS configuration
-│       ├── public/            # Static assets and data
-│       │   ├── baltic_highlight.geojson # Baltic Sea geographic data
-│       │   ├── story1.jpeg    # Success story images
-│       │   ├── story2.jpeg    # Success story images
-│       │   └── story3.jpeg    # Success story images
-│       └── src/               # React application source
-│           ├── App.tsx        # Main application component
-│           ├── components/    # Reusable React components
-│           │   ├── Auth/      # Authentication components
-│           │   ├── Layout/    # Navigation and layout components
-│           │   ├── UI/        # Generic UI components
-│           │   └── *.tsx      # Map-specific components
-│           ├── pages/         # Page-level components
-│           │   ├── LandingPage.tsx     # Homepage with success stories
-│           │   ├── MapPage.tsx         # Interactive climate map
-│           │   ├── CallToActionPage.tsx # Action listing and discovery
-│           │   ├── CreateActionPage.tsx # Action creation form
-│           │   ├── ActionDetailPage.tsx # Individual action details
-│           │   ├── ProfilePage.tsx     # User profile and stats
-│           │   ├── LoginPage.tsx       # User authentication
-│           │   └── RegisterPage.tsx    # User registration
-│           ├── contexts/      # React context providers
-│           ├── data/          # Static data and mock datasets
-│           │   ├── callForActions.ts   # Climate action data
-│           │   ├── seaLevelRise.ts     # Sea level rise data
-│           │   ├── pollution.ts        # Pollution risk data
-│           │   └── corrosion.ts        # Corrosion risk data
-│           ├── hooks/         # Custom React hooks
-│           ├── services/      # API service functions
-│           └── utils/         # Utility functions
-├── b_hack_map-merge-wiktor/     # Legacy map implementation
-│   ├── data.js                  # Legacy data definitions
-│   ├── package.json            # Legacy dependencies
-│   ├── call_for_action/        # Legacy action map
-│   │   ├── page.html           # Static HTML map page
-│   │   └── actions.js          # Legacy action data
-│   └── heatmap/                # Legacy heatmap implementation
-│       ├── page.html           # Static HTML heatmap page
-│       └── heatdata.js         # Legacy heat data
-└── README.md                    # This documentation
+├── backend/                     # Django REST API backend
+│   ├── manage.py               # Django management script
+│   ├── requirements.txt        # Python dependencies
+│   ├── db.sqlite3             # SQLite database
+│   ├── baltic_climate/        # Django project settings
+│   │   ├── __init__.py        # Python package initialization
+│   │   ├── settings.py        # Configuration and database setup
+│   │   ├── urls.py            # Main URL routing
+│   │   ├── wsgi.py            # WSGI configuration
+│   │   └── asgi.py            # ASGI configuration
+│   ├── accounts/              # User authentication and profiles
+│   │   ├── __init__.py        # Python package initialization
+│   │   ├── models.py          # User model with activism tracking
+│   │   ├── views.py           # Authentication API endpoints
+│   │   ├── serializers.py     # User data serialization
+│   │   ├── urls.py            # Auth-related URL patterns
+│   │   ├── admin.py           # Django admin configuration
+│   │   ├── apps.py            # App configuration
+│   │   ├── tests.py           # Unit tests
+│   │   └── migrations/        # Database migrations
+│   │       └── __init__.py    # Migration package initialization
+│   ├── climate_data/          # Climate data models and API
+│   │   ├── __init__.py        # Python package initialization
+│   │   ├── models.py          # Climate data point, risk areas, weather data
+│   │   ├── views.py           # Climate data API endpoints
+│   │   ├── serializers.py     # Climate data serialization
+│   │   ├── urls.py            # Climate data URL patterns
+│   │   ├── admin.py           # Django admin configuration
+│   │   ├── apps.py            # App configuration
+│   │   ├── tests.py           # Unit tests
+│   │   └── migrations/        # Database migrations
+│   │       └── __init__.py    # Migration package initialization
+│   └── actions/               # Climate action management
+│       ├── __init__.py        # Python package initialization
+│       ├── models.py          # Action, participation, resource models
+│       ├── views.py           # Action management API endpoints
+│       ├── serializers.py     # Action data serialization
+│       ├── urls.py            # Action-related URL patterns
+│       ├── admin.py           # Django admin configuration
+│       ├── apps.py            # App configuration
+│       ├── tests.py           # Unit tests
+│       └── migrations/        # Database migrations
+│           └── __init__.py    # Migration package initialization
+├── frontend/                  # React TypeScript frontend
+│   ├── package.json           # Node.js dependencies and scripts
+│   ├── package-lock.json      # Locked dependency versions
+│   ├── tsconfig.json          # TypeScript configuration
+│   ├── tailwind.config.js     # Tailwind CSS configuration
+│   ├── postcss.config.js      # PostCSS configuration
+│   ├── .env.example           # Environment variables template
+│   ├── .gitignore             # Git ignore rules for frontend
+│   ├── README.md              # Frontend-specific documentation
+│   ├── public/                # Static assets and data
+│   │   ├── index.html         # HTML template
+│   │   ├── manifest.json      # Web app manifest
+│   │   ├── robots.txt         # Search engine crawling rules
+│   │   ├── logo.ico           # Application favicon
+│   │   ├── logo.jpeg          # Application logo
+│   │   ├── baltic_highlight.geojson # Baltic Sea geographic data
+│   │   ├── story1.jpeg        # Success story images
+│   │   ├── story2.jpeg        # Success story images
+│   │   └── story3.jpeg        # Success story images
+│   └── src/                   # React application source
+│       ├── index.tsx          # Application entry point
+│       ├── App.tsx            # Main application component
+│       ├── App.css            # Application styles
+│       ├── index.css          # Global styles
+│       ├── App.test.tsx       # Application tests
+│       ├── logo.svg           # React logo
+│       ├── react-app-env.d.ts # React TypeScript definitions
+│       ├── reportWebVitals.ts # Performance monitoring
+│       ├── setupTests.ts      # Test setup configuration
+│       ├── components/        # Reusable React components
+│       │   ├── Auth/          # Authentication components
+│       │   │   └── ProtectedRoute.tsx # Route protection component
+│       │   ├── Layout/        # Navigation and layout components
+│       │   │   └── Navbar.tsx # Navigation bar component
+│       │   ├── CallForActionMap.tsx   # Action map visualization
+│       │   ├── CallForActionMarker.tsx # Map action markers
+│       │   ├── HeatmapLayer.tsx       # Climate data heatmap
+│       │   └── MapClickHandler.tsx    # Map interaction handler
+│       ├── pages/             # Page-level components
+│       │   ├── LandingPage.tsx        # Homepage with success stories
+│       │   ├── MapPage.tsx            # Interactive climate map
+│       │   ├── MapPage.css            # Map page specific styles
+│       │   ├── CallToActionPage.tsx   # Action listing and discovery
+│       │   ├── CreateActionPage.tsx   # Action creation form
+│       │   ├── ActionDetailPage.tsx   # Individual action details
+│       │   ├── ProfilePage.tsx        # User profile and stats
+│       │   ├── LoginPage.tsx          # User authentication
+│       │   └── RegisterPage.tsx       # User registration
+│       ├── contexts/          # React context providers
+│       │   └── AuthContext.tsx        # Authentication context
+│       ├── data/              # Static data and mock datasets
+│       │   ├── callForActions.ts      # Climate action data
+│       │   ├── seaLevelRise.ts        # Sea level rise data
+│       │   ├── pollution.ts           # Pollution risk data
+│       │   └── corrosion.ts           # Corrosion risk data
+│       ├── hooks/             # Custom React hooks
+│       │   └── useClimateRiskClick.ts # Climate risk interaction hook
+│       ├── services/          # API service functions
+│       │   └── climateRiskService.ts  # Climate data API client
+│       ├── utils/             # Utility functions
+│       │   └── balticSeaRegion.ts     # Baltic Sea region utilities
+│       └── devTools/          # Development utilities
+│           └── getCoordsList/ # Coordinate extraction tools
+│               └── index.html # Development coordinate tool
+├── .git/                      # Git repository metadata
+├── .gitignore                 # Git ignore rules
+└── README.md                  # Project documentation
 ```
 
 ## System Architecture
@@ -184,7 +226,7 @@ Make sure you have the following installed:
 
 1. **Navigate to the backend directory:**
 ```bash
-cd baltic-climate-app/backend
+cd backend
 ```
 
 2. **Create a virtual environment:**
@@ -236,7 +278,7 @@ The backend API will be available at `http://127.0.0.1:8000/`
 
 1. **Navigate to the frontend directory:**
 ```bash
-cd baltic-climate-app/frontend
+cd frontend
 ```
 
 2. **Install Node.js dependencies with legacy peer deps flag:**
@@ -246,7 +288,13 @@ npm install --legacy-peer-deps
 
 **Note:** The `--legacy-peer-deps` flag is required due to version conflicts between React 19.1.0 and some dependencies that haven't updated their peer dependency requirements yet.
 
-3. **Start the React development server:**
+3. **Configure environment variables (optional):**
+Copy the example environment file and customize as needed:
+```bash
+cp .env.example .env
+```
+
+4. **Start the React development server:**
 ```bash
 npm start
 ```
@@ -438,13 +486,13 @@ path("api/v1/actions/", include("actions.urls")),
 ## Contributing and Extension
 
 ### Adding New Climate Data Sources
-1. Extend models in `climate_data/models.py`
-2. Create serializers in `climate_data/serializers.py`
-3. Add API endpoints in `climate_data/views.py`
-4. Update frontend data services
+1. Extend models in `backend/climate_data/models.py`
+2. Create serializers in `backend/climate_data/serializers.py`
+3. Add API endpoints in `backend/climate_data/views.py`
+4. Update frontend data services in `frontend/src/services/`
 
 ### Adding New Action Types
-1. Update `ACTION_TYPES` choices in `actions/models.py`
+1. Update `ACTION_TYPES` choices in `backend/actions/models.py`
 2. Add corresponding frontend filtering logic
 3. Create specialized UI components if needed
 
