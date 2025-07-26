@@ -39,6 +39,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
+
 // Types
 interface ClimateDataPoint {
   id: number;
@@ -60,14 +61,23 @@ interface LegendProps {
   selectedActionTypes: string[];
 }
 
-// 🔧 FIXED: Action types configuration - keys now match the actual data
+// Action types configuration - keys now match the actual data
 const ACTION_TYPES = [
-  { key: 'Protest', label: 'Protests', color: '#ec4899' },
-  { key: 'Cleanup', label: 'Clean-ups', color: '#10b981' },
-  { key: 'Workshop', label: 'Workshops', color: '#3b82f6' },
-  { key: 'Seminar', label: 'Seminars', color: '#f59e0b' },
-  { key: 'Festival', label: 'Festivals', color: '#8b5cf6' },
-  { key: 'Training', label: 'Training', color: '#06b6d4' },
+  { key: 'Protest', label: 'Protests', color: '#793a42' },
+  { key: 'Cleanup', label: 'Clean-ups', color: '#97988a' },
+  { key: 'Workshop', label: 'Workshops', color: '#bd6f48' },
+  { key: 'Seminar', label: 'Seminars', color: '#0b2943' },
+  { key: 'Virtual', label: 'Virtual Events', color: '#9198ab' },
+  { key: 'Training', label: 'Training', color: '#b6883b' },
+  { key: 'Science', label: 'Citizen Science', color: '#3f4b35' },
+];
+
+// Climate data types configuration
+const CLIMATE_DATA_TYPES = [
+  { key: 'temperature', label: 'Temperature', icon: <Thermometer size={18} /> },
+  { key: 'humidity', label: 'Humidity', icon: <Droplets size={18} /> },
+  { key: 'wind_speed', label: 'Wind Speed', icon: <Wind size={18} /> },
+  { key: 'precipitation', label: 'Precipitation', icon: <Droplets size={18} /> },
 ];
 
 // Helpers
@@ -155,7 +165,7 @@ const Legend: React.FC<LegendProps> = ({
       )}
 
       {selectedDataTypes.includes('wind_speed') && (
-          <Section title="Wind (km/h)">
+          <Section title="Wind Speed (km/h)">
             <Swatch color="#000000" label="> 15" />
             <Swatch color="#6b7280" label="10 – 15" />
             <Swatch color="#d1d5db" label="< 10" />
@@ -390,42 +400,41 @@ const MapPage: React.FC = () => {
                 </div>
 
                 {/* Climate Data Section */}
-                <div className="border-t border-gray-200 pt-4">
+                <div className="border-t border-gray-200 pt-4 mb-4">
                   <h3 className="text-sm font-medium mb-3">Climate Data</h3>
-                  <div className="grid grid-cols-2 gap-2 mb-4">
-                    {[
-                      { key: 'temperature', icon: <Thermometer size={18} /> },
-                      { key: 'humidity', icon: <Droplets size={18} /> },
-                      { key: 'wind_speed', icon: <Wind size={18} /> },
-                      { key: 'precipitation', icon: <Droplets size={18} /> },
-                    ].map(({ key, icon }) => (
-                        <button
-                            key={key}
-                            onClick={() =>
-                                setSelectedDataTypes((prev) =>
-                                    prev.includes(key) ? prev.filter((t) => t !== key) : [...prev, key],
-                                )
-                            }
-                            className={`flex items-center justify-center h-10 rounded 
-                      ${selectedDataTypes.includes(key)
-                                ? 'bg-black text-white'
-                                : 'bg-gray-100 hover:bg-gray-200'}`}
-                            title={key}
-                        >
+                  <div className="space-y-2">
+                    {CLIMATE_DATA_TYPES.map(({ key, label, icon }) => (
+                        <label key={key} className="flex items-center space-x-2 text-sm cursor-pointer">
+                          <input
+                              type="checkbox"
+                              checked={selectedDataTypes.includes(key)}
+                              onChange={() =>
+                                  setSelectedDataTypes((prev) =>
+                                      prev.includes(key) ? prev.filter((t) => t !== key) : [...prev, key],
+                                  )
+                              }
+                          />
                           {icon}
-                        </button>
+                          <span>{label}</span>
+                        </label>
                     ))}
                   </div>
+                </div>
 
-                  {/* Sea Level Rise within Climate Data */}
-                  <label className="flex items-center space-x-2 text-sm cursor-pointer">
-                    <input
-                        type="checkbox"
-                        checked={showSeaLevelRise}
-                        onChange={() => setShowSeaLevelRise(!showSeaLevelRise)}
-                    />
-                    <TrendingUp size={14} /> <span>Sea-level Rise</span>
-                  </label>
+                {/* Climate Risks Section */}
+                <div className="border-t border-gray-200 pt-4">
+                  <h3 className="text-sm font-medium mb-3">Climate Risks</h3>
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2 text-sm cursor-pointer">
+                      <input
+                          type="checkbox"
+                          checked={showSeaLevelRise}
+                          onChange={() => setShowSeaLevelRise(!showSeaLevelRise)}
+                      />
+                      <TrendingUp size={14} />
+                      <span>Flooding (Sea-level Rise)</span>
+                    </label>
+                  </div>
                 </div>
               </>
           )}

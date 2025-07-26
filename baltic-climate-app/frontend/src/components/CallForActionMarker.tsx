@@ -14,13 +14,14 @@ const CallForActionMarker: React.FC<CallForActionMarkerProps> = ({ action }) => 
   // Function to get marker color based on action type
   const getMarkerColor = (type: string): string => {
     switch (type.toLowerCase()) {
-      case 'protest':   return '#ec4899'; // pink
-      case 'cleanup':   return '#10b981'; // green
-      case 'workshop':  return '#3b82f6'; // blue
-      case 'seminar':   return '#f59e0b'; // orange
-      case 'festival':  return '#8b5cf6'; // purple
-      case 'training':  return '#06b6d4'; // teal
-      default:          return '#6b7280'; // gray
+      case 'protest':   return '#793a42';
+      case 'cleanup':   return '#97988a';
+      case 'workshop':  return '#bd6f48';
+      case 'seminar':   return '#0b2943';
+      case 'virtual':  return '#9198ab';
+      case 'training':  return '#b6883b';
+      case 'science':   return '#3f4b35';
+      default:          return '#ffffff';
     }
   };
 
