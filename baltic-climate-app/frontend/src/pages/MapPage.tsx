@@ -24,6 +24,16 @@ import './MapPage.css';
 
 import { callForActions } from '../data/callForActions';
 import { seaLevelRiseData } from '../data/seaLevelRise';
+import {
+  pollutionDangerData,
+  getPollutionDangerColor,
+  getPollutionDangerIntensity,
+} from '../data/pollution';
+import {
+  corrosionRiskData,
+  getCorrosionRiskColor,
+  getCorrosionRiskIntensity,
+} from '../data/corrosion';
 import CallForActionMarker from '../components/CallForActionMarker';
 import HeatmapLayer from '../components/HeatmapLayer';
 import MapClickHandler from '../components/MapClickHandler';
@@ -39,7 +49,6 @@ L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
   shadowUrl: markerShadow,
 });
-
 
 // Types
 interface ClimateDataPoint {
@@ -59,6 +68,8 @@ interface LegendProps {
   selectedDataTypes: string[];
   showActions: boolean;
   showSeaLevelRise: boolean;
+  showPollutionDanger: boolean;
+  showCorrosionRisk: boolean;
   selectedActionTypes: string[];
 }
 
@@ -93,7 +104,6 @@ const MASK_BOUNDS: [number, number][] = [
 
 const getMaskPolygon = (featureGeoJSON: any): LatLngExpression[][] | null => {
   if (!featureGeoJSON?.features?.length) return null;
-
   const geom = featureGeoJSON.features[0].geometry;
   const outer = MASK_BOUNDS;
   let maskHoles: LatLngExpression[][] = [];
@@ -138,6 +148,8 @@ const Legend: React.FC<LegendProps> = ({
                                          selectedDataTypes,
                                          showActions,
                                          showSeaLevelRise,
+                                         showPollutionDanger,
+                                         showCorrosionRisk,
                                          selectedActionTypes,
                                        }) => (
     <>
@@ -190,6 +202,26 @@ const Legend: React.FC<LegendProps> = ({
             <Swatch color="#ef4444" label="0.8 – 0.9" />
           </Section>
       )}
+
+      {showPollutionDanger && (
+          <Section title="Pollution Danger">
+            <Swatch color="#1de9b6" label="Lowest" />
+            <Swatch color="#7e57c2" label="Low" />
+            <Swatch color="#ffee58" label="Moderate" />
+            <Swatch color="#ffa726" label="High" />
+            <Swatch color="#d32f2f" label="Highest" />
+          </Section>
+      )}
+
+      {showCorrosionRisk && (
+          <Section title="Coastal Corrosion Risk">
+            <Swatch color="#43a047" label="Lowest" />
+            <Swatch color="#ffee58" label="Low" />
+            <Swatch color="#fbc02d" label="Moderate" />
+            <Swatch color="#fb8c00" label="High" />
+            <Swatch color="#d32f2f" label="Critical" />
+          </Section>
+      )}
     </>
 );
 
@@ -201,12 +233,14 @@ const MapPage: React.FC = () => {
   const [selectedDataTypes, setSelectedDataTypes] = useState<string[]>(['temperature']);
   const [showActions, setShowActions] = useState(true);
   const [showSeaLevelRise, setShowSeaLevelRise] = useState(false);
+  const [showPollutionDanger, setShowPollutionDanger] = useState(false);
+  const [showCorrosionRisk, setShowCorrosionRisk] = useState(false);
   const [panelOpen, setPanelOpen] = useState(true);
 
   // New states for collapsible action types
   const [actionsExpanded, setActionsExpanded] = useState(false);
   const [selectedActionTypes, setSelectedActionTypes] = useState<string[]>(
-      ACTION_TYPES.map(type => type.key) // All selected by default
+      ACTION_TYPES.map(type => type.key)
   );
 
   const [highlightFeature, setHighlightFeature] = useState<any>(null);
@@ -302,11 +336,9 @@ const MapPage: React.FC = () => {
   // Handle master checkbox toggle
   const handleMasterActionToggle = () => {
     if (showActions && selectedActionTypes.length > 0) {
-      // If showing actions and some are selected, turn off all
       setShowActions(false);
       setSelectedActionTypes([]);
     } else {
-      // Otherwise, turn on all actions
       setShowActions(true);
       setSelectedActionTypes(ACTION_TYPES.map(type => type.key));
     }
@@ -318,10 +350,7 @@ const MapPage: React.FC = () => {
       const newSelection = prev.includes(actionType)
           ? prev.filter(type => type !== actionType)
           : [...prev, actionType];
-
-      // Update showActions based on selection
       setShowActions(newSelection.length > 0);
-
       return newSelection;
     });
   };
@@ -336,7 +365,7 @@ const MapPage: React.FC = () => {
 
   return (
       <div className="h-screen w-screen overflow-hidden relative pt-16">
-        {/* Floating control panel - moved down more */}
+        {/* Floating control panel */}
         <div
             className={`absolute top-40 left-4 z-[1000] bg-white border border-gray-300 shadow-lg 
           transition-all duration-300 ${panelOpen ? 'max-w-xs p-4' : 'w-11 p-2'}`}
@@ -367,8 +396,6 @@ const MapPage: React.FC = () => {
                       <Calendar size={14} />
                       <span>All Actions ({selectedActionTypes.length})</span>
                     </label>
-
-                    {/* Collapse/expand arrow */}
                     <button
                         onClick={() => setActionsExpanded(!actionsExpanded)}
                         className="p-1 hover:bg-gray-100 rounded"
@@ -378,7 +405,6 @@ const MapPage: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* Collapsible action type checkboxes */}
                   {actionsExpanded && (
                       <div className="mt-2 ml-6 space-y-1 border-l-2 border-gray-200 pl-3">
                         {ACTION_TYPES.map(actionType => (
@@ -434,6 +460,24 @@ const MapPage: React.FC = () => {
                       />
                       <TrendingUp size={14} />
                       <span>Flooding (Sea-level Rise)</span>
+                    </label>
+                    <label className="flex items-center space-x-2 text-sm cursor-pointer">
+                      <input
+                          type="checkbox"
+                          checked={showPollutionDanger}
+                          onChange={() => setShowPollutionDanger(!showPollutionDanger)}
+                      />
+                      <Droplets size={14} />
+                      <span>Pollution Danger</span>
+                    </label>
+                    <label className="flex items-center space-x-2 text-sm cursor-pointer">
+                      <input
+                          type="checkbox"
+                          checked={showCorrosionRisk}
+                          onChange={() => setShowCorrosionRisk(!showCorrosionRisk)}
+                      />
+                      <TrendingUp size={14} />
+                      <span>Coastal Corrosion</span>
                     </label>
                   </div>
                 </div>
@@ -498,7 +542,7 @@ const MapPage: React.FC = () => {
               )),
           )}
 
-          {/* Environmental actions - filtered by selected action types */}
+          {/* Environmental actions */}
           {showActions &&
               callForActions
                   .filter((action) => selectedActionTypes.includes(action.type))
@@ -510,6 +554,26 @@ const MapPage: React.FC = () => {
           <HeatmapLayer
               data={seaLevelRiseData.map((p) => [p.lat, p.lng, normalizeSeaLevelRise(p.value)])}
               visible={showSeaLevelRise}
+          />
+
+          {/* Pollution danger heatmap */}
+          <HeatmapLayer
+              data={pollutionDangerData.map((p) => [
+                p.lat,
+                p.lng,
+                getPollutionDangerIntensity(p.value),
+              ])}
+              visible={showPollutionDanger}
+          />
+
+          {/* Coastal corrosion risk heatmap */}
+          <HeatmapLayer
+              data={corrosionRiskData.map((p) => [
+                p.lat,
+                p.lng,
+                getCorrosionRiskIntensity(p.value),
+              ])}
+              visible={showCorrosionRisk}
           />
 
           {/* Climate Risk Click Handler */}
@@ -525,6 +589,8 @@ const MapPage: React.FC = () => {
               selectedDataTypes={selectedDataTypes}
               showActions={showActions}
               showSeaLevelRise={showSeaLevelRise}
+              showPollutionDanger={showPollutionDanger}
+              showCorrosionRisk={showCorrosionRisk}
               selectedActionTypes={selectedActionTypes}
           />
         </div>
