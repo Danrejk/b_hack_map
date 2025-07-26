@@ -96,6 +96,8 @@ const LandingPage: React.FC = () => {
     setCurrentStory((prev) => (prev - 1 + successStories.length) % successStories.length);
   };
 
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       {/* Hero Section with Animated Background */}
@@ -153,9 +155,15 @@ const LandingPage: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-4 rounded-2xl shadow-lg">
-                <Waves className="h-12 w-12 text-white" />
-              </div>
+              <motion.img
+                  src="/logo.jpeg"
+                  alt="VisBaltic Logo"
+                  className="h-32 w-32 shadow-lg object-cover"
+                  animate={isLogoHovered ? { y: [0, -40, 0, -20, 0, -8, 0] } : { y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  onMouseEnter={() => setIsLogoHovered(true)}
+                  onMouseLeave={() => setIsLogoHovered(false)}
+              />
             </motion.div>
             
             <motion.h1 
