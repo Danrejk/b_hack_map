@@ -56,6 +56,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Develop open‑source tools and apps to forecast flooding and improve early‑warning systems.',
         lat: 55.6761,
         lng: 12.5683,
+        image: 'https://www.liveintent.com/wp-content/uploads/2024/07/Hackathon-social.jpg'
     },
     {
         type: 'Workshop',
@@ -66,6 +67,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'City planners, architects and activists discuss green roofs, parks and cooling strategies to mitigate urban heat islands.',
         lat: 59.437,
         lng: 24.7536,
+        image: 'https://www.ubc-sustainable.net/sites/default/files/media/bulworkshop-3314.jpg'
     },
     {
         type: 'Training',
@@ -76,6 +78,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Public training on recognising heatstroke, establishing cooling shelters and organising community response during heat waves.',
         lat: 60.1699,
         lng: 24.9384,
+        image: 'https://www.eventu.al/sites/default/files/styles/large/public/images/2023-06/Heatwave_event_1.jpg?itok=0FdHA2lB'
     },
     {
         type: 'Cleanup',
@@ -86,6 +89,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Volunteers remove marine litter from beaches and discuss how waste and erosion amplify flood risks.',
         lat: 54.3233,
         lng: 10.1228,
+        image: 'https://i.ytimg.com/vi/SaSTHFDh9wQ/maxresdefault.jpg'
     },
     {
         type: 'Workshop', // Festival → Workshop
@@ -96,6 +100,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Music, art and workshops highlighting climate adaptation, sea‑level rise and coastal resilience along the North Atlantic.',
         lat: 64.1466,
         lng: -21.9426,
+        image: 'https://c8.alamy.com/comp/2A65YW2/fridays4future-youths-school-strike-to-raise-awareness-of-the-environment-and-climate-change-in-reykjavik-iceland-11-october-2019-2A65YW2.jpg'
     },
     {
         type: 'Seminar', // stays Seminar
@@ -106,6 +111,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Experts and city officials present strategies for tree planting, reflective surfaces and public health measures during heat waves.',
         lat: 56.9496,
         lng: 24.1052,
+        image: 'https://silviatavares.com/wp-content/uploads/2022/07/urban-heat-seminar-cairns.png'
     },
     {
         type: 'Workshop',
@@ -116,6 +122,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Interactive sessions on dune restoration, nature‑based solutions and citizen science to counter shoreline erosion.',
         lat: 55.7033,
         lng: 21.1443,
+        image: 'https://tse3.mm.bing.net/th/id/OIP.rDlu7EqrE6xZE3cCMGQCZQHaE8?cb=thvnext&rs=1&pid=ImgDetMain&o=7&rm=3'
     },
     {
         type: 'Training',
@@ -126,6 +133,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Hands‑on drill to prepare communities for intense rainfall and flash floods, including emergency communication exercises.',
         lat: 60.3913,
         lng: 5.3221,
+        image: 'https://i.ytimg.com/vi/V9MLPhjER9U/maxresdefault.jpg'
     },
     {
         type: 'Cleanup',
@@ -136,6 +144,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Guided tours along the Vistula Spit explain historic erosion rates and showcase shoreline protection projects.',
         lat: 54.352,
         lng: 18.6466,
+        image: 'https://draftitinerary.com/wp-content/uploads/2024/10/gdansk-5-day-itinerary.webp'
     },
     {
         type: 'Workshop', // Festival → Workshop
@@ -146,6 +155,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Exhibition of cooling technologies, green roofs and shading innovations for hotter summers, with hands‑on demonstrations.',
         lat: 59.3293,
         lng: 18.0686,
+        image: 'https://ugreen.io/wp-content/uploads/2023/06/14-1.png'
     },
     {
         type: 'Seminar', // Summit → Seminar
@@ -156,6 +166,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Cross‑border summit in Turku for policymakers, scientists and activists to share best practices on flooding, heat stress, erosion and sea‑level rise.',
         lat: 60.4518,
         lng: 22.2666,
+        image: 'https://storage.mlcdn.com/account_image/518224/IyCu7zMqwp4Cr7wbGN0LcdTLW0BS9ZefwyeRg7Gl.png'
     },
     {
         type: 'Protest', // stays Protest
@@ -166,6 +177,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Demonstration calling for stronger climate action to protect vulnerable coastal communities from flooding and heat stress.',
         lat: 59.9139,
         lng: 10.7522,
+        image: 'https://e3.365dm.com/23/03/1600x900/skynews-norway-protest-thunberg_6075919.jpg?20230302235022'
     },
     {
         type: 'Workshop',
@@ -176,6 +188,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Hands‑on training in sandbagging, emergency kits and flood barrier construction for residents of the Odense region.',
         lat: 55.4038,
         lng: 10.4024,
+        image: 'https://www.survivaltrainingpool.com/wp-content/uploads/2023/01/4-Murphys-Disaster-Flood-Search-Rescue-Training-Centre-scaled-1.jpeg'
     },
     {
         type: 'Workshop', // Buildathon → Workshop
@@ -186,6 +199,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Volunteers help install a pilot green roof while learning about its cooling benefits for urban heat islands.',
         lat: 58.3776,
         lng: 26.729,
+        image: 'https://www.tartu.ee/sites/default/files/2016-10/IMG_6150.jpg'
     },
     {
         type: 'Training',
@@ -196,6 +210,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Role‑playing exercise with first responders and volunteers on heatwave emergency protocols and vulnerable population outreach.',
         lat: 65.0121,
         lng: 25.4651,
+        image: 'https://i.ytimg.com/vi/DO0LdKBDpFI/maxresdefault.jpg'
     },
     {
         type: 'Cleanup',
@@ -206,6 +221,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Residents and students rebuild dunes along the Elbe estuary to reduce coastal erosion and protect habitats.',
         lat: 53.5511,
         lng: 9.9937,
+        image: 'https://img.freepik.com/premium-photo/dune-restoration-project-protecting-shorelines-with-native-plants_879736-31981.jpg?w=2000'
     },
     {
         type: 'Workshop', // Camp → Workshop
@@ -216,6 +232,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Youth camp featuring lectures and excursions focused on climate adaptation for northern communities.',
         lat: 65.6839,
         lng: -18.1106,
+        image: 'https://ddc514qh7t05d.cloudfront.net/dA/a15188043d866e56aa7f3f33fa1179d0/1200w/Jpeg'
     },
     {
         type: 'Workshop', // Fair → Workshop
@@ -226,6 +243,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Outdoor fair offering free health checks and guidance on staying cool during heat waves, with local music and food.',
         lat: 56.5103,
         lng: 21.0137,
+        image: 'https://healthychelsea.org/wp-content/uploads/2022/04/Health-Fair-English.jpg'
     },
     {
         type: 'Seminar', // Summit → Seminar
@@ -236,6 +254,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Summit in Neringa on flood prevention, sustainable tourism and preserving the UNESCO‑listed Curonian Spit.',
         lat: 55.368,
         lng: 21.06,
+        image: 'https://www.weather2travel.com/images_blog/curonian-spit-neringa-lithuania.jpg'
     },
     {
         type: 'Workshop',
@@ -246,6 +265,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Participants learn how to build rain gardens to absorb runoff, reduce flooding and improve urban biodiversity.',
         lat: 63.4305,
         lng: 10.3951,
+        image: 'https://www.cleanlakesalliance.org/wp-content/uploads/2023/04/RainGardenWorkshop.jpeg'
     },
     {
         type: 'Seminar', // Forum → Seminar
@@ -256,17 +276,9 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Forum exploring innovations in breakwaters, beach nourishment and community‑led dune maintenance on the Polish coast.',
         lat: 53.4285,
         lng: 14.5528,
+        image: 'https://cdn-legacy.defence24.pl/defence24.pl/upload/2018-12-06/pjbc4q_Szczecin.jpg'
     },
-    {
-        type: 'Workshop', // Expo → Workshop
-        name: 'Gothenburg Heat Adaptation Expo',
-        organizer: 'City of Gothenburg',
-        dateStart: '2025-09-25',
-        dateEnd: '2025-09-26',
-        description: 'Expo showcasing shading structures, reflective pavement and climate‑resilient urban planning solutions.',
-        lat: 57.7089,
-        lng: 11.9746,
-    },
+  
     {
         type: 'Seminar', // Roundtable → Seminar
         name: 'Åland Sea‑Level Roundtable',
@@ -276,6 +288,7 @@ const _baseCallForActions: CallForAction[] = [
         description: 'Local governments from Finland and Sweden meet to discuss integrated sea‑level rise adaptation in the Åland archipelago.',
         lat: 60.1169,
         lng: 19.9071,
+        image: 'https://upplevelsebolaget.com/wp-content/uploads/2024/03/kayaking_aland-20.jpg'
     },
 ];
 
