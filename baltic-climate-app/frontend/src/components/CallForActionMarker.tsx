@@ -72,13 +72,6 @@ const CallForActionMarker: React.FC<CallForActionMarkerProps> = ({ action }) => 
     <Marker position={position} icon={customIcon}>
       <Popup className="custom-popup" maxWidth={300}>
         <div className="p-0 min-w-[280px]">
-          {/* Image if available */}
-          {action.image && (
-            <div 
-              className="w-full h-32 bg-cover bg-center mb-3 rounded-t"
-              style={{ backgroundImage: `url(${action.image})` }}
-            />
-          )}
           
           {/* Content */}
           <div className="px-1">
@@ -89,6 +82,14 @@ const CallForActionMarker: React.FC<CallForActionMarkerProps> = ({ action }) => 
             <div className="text-sm text-gray-600 mb-2 capitalize">
               {action.type}
             </div>
+
+            {/* Image if available */}
+            {action.image && (
+                <div
+                    className="w-full h-40 bg-cover bg-center mb-3 rounded-t"
+                    style={{ backgroundImage: `url(${action.image})` }}
+                />
+            )}
             
             <div className="text-sm text-gray-500 mb-1">
               Organized by {action.organizer}

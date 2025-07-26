@@ -26,6 +26,28 @@ export interface CallForAction {
 
 const _baseCallForActions: CallForAction[] = [
     {
+        type: 'Seminar',
+        name: 'Baltic Youth Waves for Democracy 2025',
+        organizer: 'CBSS - Council of the Baltic Sea States',
+        dateStart: '2025-09-15',
+        dateEnd: '2025-09-19',
+        description: `Join young leaders from the Baltic Sea region in a seminar to strengthen democratic values and youth participation through workshops, discussions, and networking. Be part of shaping the future of democracy!`,
+        lat: 54.44883,
+        lng: 18.56071,
+        image: 'https://cbss.org/wp-content/uploads/2025/07/bywd-2025_250714_v1_1-1440x810.jpg'
+    },
+    {
+        type: 'Virtual',
+        name: 'VisBaltic - Visualising Climate Risks and Solutions',
+        organizer: 'CBSS - Council of the Baltic Sea States',
+        dateStart: '2025-07-24',
+        dateEnd: '2025-07-27',
+        description: 'Create an interactive map that showcases the impact of climate change on the Baltic Sea region. Show call for actions for individuals to take matters into their own hands and make a difference.',
+        lat: 53.84895,
+        lng: 10.68824,
+        image: 'https://cbss.org/wp-content/uploads/2025/04/b_hack-2025-banner-final-small-1440x810.jpg'
+    },
+    {
         type: 'Science', // Hackathon → Science
         name: 'Copenhagen Flood Resilience Hackathon',
         organizer: 'Danish Climate Lab',
