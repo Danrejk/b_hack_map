@@ -105,7 +105,7 @@ const Navbar: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-900 to-cyan-600 bg-clip-text text-transparent">
-                  Baltic Climate
+                  VisBaltic
                 </span>
                 <span className="text-xs text-blue-600 font-medium -mt-1">Solutions Platform</span>
               </div>
@@ -115,7 +115,7 @@ const Navbar: React.FC = () => {
           {/* Enhanced Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-2">
             <motion.div
-              className="flex items-center space-x-1"
+              className="flex items-center space-x-6"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
