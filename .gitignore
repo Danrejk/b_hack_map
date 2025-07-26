@@ -1,3 +1,6 @@
 .env
 baltic-climate-app/backend/.env
 baltic-climate-app/backend/.env
+
+.DS_Store
+baltic-climate-app/.DS_Store
