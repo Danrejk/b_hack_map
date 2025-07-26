@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Temperature Heatmap (DWD WMS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .legend.leaflet-control {
+      background: #fff; padding: 6px; border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.2);
+      max-width: 220px;
+    }
+    .legend-title { font-weight: 600; margin-bottom: 4px; }
+    .legend img { max-width: 100%; display: block; }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script>
+    // --- Map setup (global view; not forced to Germany) ---
+    const map = L.map('map', { worldCopyJump: true }).setView([51, 10], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // --- DWD WMS: 2 m air temperature ---
+    const WMS_URL = 'https://maps.dwd.de/geoserver/wms';
+    const WMS_LAYER = 'dwd:Icon_reg025_fd_sl_T2M';
+
+    const tempLayer = L.tileLayer.wms(WMS_URL, {
+      layers: WMS_LAYER,
+      format: 'image/png',
+      transparent: true,
+      version: '1.3.0',
+      opacity: 0.7,
+      crossOrigin: 'anonymous',
+      attribution: 'Data © Deutscher Wetterdienst (DWD)'
+    }).addTo(map);
+
+    // --- Legend (robust GetLegendGraphic with fallbacks) ---
+    const LegendControl = L.Control.extend({
+      options: { position: 'bottomright' },
+      onAdd: function () {
+        const div = L.DomUtil.create('div', 'legend leaflet-control');
+        div.innerHTML = `
+          <div class="legend-title">2 m Temperature (°C)</div>
+          <img id="legendImg" alt="Legend loading..." />
+          <small>Data © DWD</small>
+        `;
+        // Prevent map drag when scrolling the legend
+        L.DomEvent.disableClickPropagation(div);
+        return div;
+      }
+    });
+    map.addControl(new LegendControl());
+
+    function setLegendGraphic() {
+      const styles = tempLayer.wmsParams.styles || '';
+      const base = `${WMS_URL}?SERVICE=WMS&REQUEST=GetLegendGraphic&FORMAT=image/png&VERSION=1.3.0`;
+      const candidates = [
+        // Most GeoServer setups accept this when a default style exists:
+        `${base}&LAYER=${encodeURIComponent(WMS_LAYER)}&STYLE=${encodeURIComponent(styles)}`,
+        // Explicit SLD version (some servers expect it):
+        `${base}&LAYER=${encodeURIComponent(WMS_LAYER)}&SLD_VERSION=1.1.0`,
+        // Minimal, case-insensitive variant (fallback):
+        `${WMS_URL}?service=WMS&request=GetLegendGraphic&layer=${encodeURIComponent(WMS_LAYER)}&format=image/png`
+      ];
+
+      const img = document.getElementById('legendImg');
+      let i = 0;
+      function tryNext() {
+        if (i >= candidates.length) {
+          img.alt = 'Legend unavailable';
+          return;
+        }
+        img.onerror = tryNext; // try next URL on error
+        img.src = candidates[i++];
+      }
+      tryNext();
+    }
+    setLegendGraphic();
+
+    // --- Optional: set TIME to the latest available from GetCapabilities ---
+    async function setLatestTime() {
+      try {
+        const capsResp = await fetch(`${WMS_URL}?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0`);
+        const xml = new DOMParser().parseFromString(await capsResp.text(), 'application/xml');
+        const layers = Array.from(xml.getElementsByTagName('Layer'));
+        const layerNode = layers.find(n => {
+          const nameNode = n.getElementsByTagName('Name')[0];
+          return nameNode && nameNode.textContent.trim() === WMS_LAYER;
+        });
+        if (!layerNode) return;
+
+        const dim = layerNode.querySelector('Dimension[name="time"], Extent[name="time"]');
+        if (!dim) return;
+        const v = dim.textContent.trim();
+        let latest;
+        if (v.includes('/')) latest = v.split('/')[1];
+        else {
+          const parts = v.split(',').map(s => s.trim()).filter(Boolean);
+          latest = parts[parts.length - 1];
+        }
+        if (latest) {
+          tempLayer.setParams({ time: latest });
+          // Some servers render style-dependent legends per TIME value; refresh legend if needed:
+          // setLegendGraphic();
+        }
+      } catch (e) {
+        console.warn('Could not set TIME from capabilities:', e);
+      }
+    }
+    setLatestTime();
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Germany Temperature Gradient Heatmap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <style>
+        #map { height: 90vh; }
+    </style>
+</head>
+<body>
+<h2>Mock Temperature Plane in Germany (Heatmap)</h2>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script type="module" src="pollutions.js"></script>
+<script>
+    var map = L.map('map').setView([51, 10], 6);
+
+    // OpenStreetMap base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+   const wmsUrl = 'https://gdi.bsh.de/mapservice_gs/GVU_WaterPollution/ows?';
+
+const overlays = {
+  "Chemicals":  L.tileLayer.wms(wmsUrl, { layers:'chemicals_all',  format:'image/png', transparent:true, version:'1.3.0' }),
+  "Effluents":  L.tileLayer.wms(wmsUrl, { layers:'effluents_all',  format:'image/png', transparent:true, version:'1.3.0' }),
+  "Misc":       L.tileLayer.wms(wmsUrl, { layers:'miscellaneous_all', format:'image/png', transparent:true, version:'1.3.0' }),
+  "Oil":        L.tileLayer.wms(wmsUrl, { layers:'oil_all',         format:'image/png', transparent:true, version:'1.3.0' }),
+  "Waste":      L.tileLayer.wms(wmsUrl, { layers:'waste_all',       format:'image/png', transparent:true, version:'1.3.0' })
+};
+
+// Add some by default
+overlays.Chemicals.addTo(map);
+overlays.Oil.addTo(map);
+
+// Layer switcher
+L.control.layers(null, overlays, { collapsed:false }).addTo(map);
+
+// Legend control
+const legend = L.control({ position:'bottomright' });
+legend.onAdd = function () {
+  const div = L.DomUtil.create('div','legend');
+  div.style.background = 'white';
+  div.style.padding = '6px';
+  div.style.font = '12px/1.2 Arial, sans-serif';
+  updateLegend(div);
+  return div;
+};
+legend.addTo(map);
+
+function updateLegend(container) {
+  container.innerHTML = '';
+  for (const [name, layer] of Object.entries(overlays)) {
+    if (map.hasLayer(layer)) {
+      const item = document.createElement('div');
+      item.style.marginBottom = '4px';
+      const title = document.createElement('div');
+      title.textContent = name;
+      title.style.fontWeight = 'bold';
+      const img = document.createElement('img');
+      img.alt = name + ' legend';
+      img.src = wmsUrl +
+        'SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&FORMAT=image/png&LAYER=' +
+        encodeURIComponent(layer.wmsParams.layers);
+      item.appendChild(title);
+      item.appendChild(img);
+      container.appendChild(item);
+    }
+  }
+}
+
+// Update legend when user toggles overlays
+map.on('overlayadd overlayremove', () => updateLegend(legend.getContainer()));
+
+
+
+</script>
+</body>
+</html>
