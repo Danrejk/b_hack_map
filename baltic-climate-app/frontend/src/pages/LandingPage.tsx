@@ -389,113 +389,134 @@ const LandingPage: React.FC = () => {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Feature 1: Interactive Maps */}
             <motion.div 
-              className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-blue-100 hover:border-blue-300 transform hover:-translate-y-2"
+              className="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-blue-100 hover:border-blue-300 transform hover:-translate-y-2 flex flex-col h-full"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
-                <MapPin className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Interactive Climate Maps</h3>
-              <p className="text-gray-600 mb-8 leading-relaxed text-center">
-                Explore dynamic visualizations of temperature changes, sea level rise, flooding risks, 
-                and coastal erosion with our advanced mapping technology powered by real-time satellite data.
-              </p>
-              <div className="bg-blue-50 rounded-2xl p-6 mb-6">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-blue-600">Real-time</div>
-                    <div className="text-sm text-gray-600">Data Updates</div>
+              <div className="p-8 flex flex-col flex-grow">
+                <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <MapPin className="h-10 w-10 text-white" />
+                </div>
+                
+                <div className="text-center flex-grow flex flex-col">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Interactive Climate Maps</h3>
+                  <p className="text-gray-600 mb-8 leading-relaxed flex-grow">
+                    Explore dynamic visualizations of temperature changes, sea level rise, flooding risks, 
+                    and coastal erosion with our advanced mapping technology powered by real-time satellite data.
+                  </p>
+                  
+                  <div className="bg-blue-50 rounded-2xl p-6 mb-8">
+                    <div className="grid grid-cols-2 gap-4 text-center">
+                      <div>
+                        <div className="text-2xl font-bold text-blue-600">Real-time</div>
+                        <div className="text-sm text-gray-600">Data Updates</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-blue-600">9 Countries</div>
+                        <div className="text-sm text-gray-600">Coverage</div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-blue-600">9 Countries</div>
-                    <div className="text-sm text-gray-600">Coverage</div>
-                  </div>
+                  
+                  <Link
+                    to="/map"
+                    className="group/link bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105 mt-auto"
+                  >
+                    <span>Explore Maps</span>
+                    <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
-              <Link
-                to="/map"
-                className="group/link bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105"
-              >
-                <span>Explore Maps</span>
-                <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
-              </Link>
             </motion.div>
 
             {/* Feature 2: Community Action */}
             <motion.div 
-              className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-green-100 hover:border-green-300 transform hover:-translate-y-2"
+              className="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-green-100 hover:border-green-300 transform hover:-translate-y-2 flex flex-col h-full"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="bg-gradient-to-br from-green-500 to-teal-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
-                <Users className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Community Action Hub</h3>
-              <p className="text-gray-600 mb-8 leading-relaxed text-center">
-                Connect with local initiatives, organize climate actions, and collaborate with governments, 
-                NGOs, and citizens across the Baltic region to create meaningful environmental impact.
-              </p>
-              <div className="bg-green-50 rounded-2xl p-6 mb-6">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-green-600">500+</div>
-                    <div className="text-sm text-gray-600">Active Projects</div>
+              <div className="p-8 flex flex-col flex-grow">
+                <div className="bg-gradient-to-br from-green-500 to-teal-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <Users className="h-10 w-10 text-white" />
+                </div>
+                
+                <div className="text-center flex-grow flex flex-col">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Community Action Hub</h3>
+                  <p className="text-gray-600 mb-8 leading-relaxed flex-grow">
+                    Connect with local initiatives, organize climate actions, and collaborate with governments, 
+                    NGOs, and citizens across the Baltic region to create meaningful environmental impact.
+                  </p>
+                  
+                  <div className="bg-green-50 rounded-2xl p-6 mb-8">
+                    <div className="grid grid-cols-2 gap-4 text-center">
+                      <div>
+                        <div className="text-2xl font-bold text-green-600">500+</div>
+                        <div className="text-sm text-gray-600">Active Projects</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-600">50K+</div>
+                        <div className="text-sm text-gray-600">Participants</div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-green-600">50K+</div>
-                    <div className="text-sm text-gray-600">Participants</div>
-                  </div>
+                  
+                  <Link
+                    to="/call-to-action"
+                    className="group/link bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105 mt-auto"
+                  >
+                    <span>Join Actions</span>
+                    <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
-              <Link
-                to="/call-to-action"
-                className="group/link bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105"
-              >
-                <span>Join Actions</span>
-                <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
-              </Link>
             </motion.div>
 
             {/* Feature 3: Data Analytics */}
             <motion.div 
-              className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-purple-100 hover:border-purple-300 transform hover:-translate-y-2"
+              className="group bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-purple-100 hover:border-purple-300 transform hover:-translate-y-2 flex flex-col h-full"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <div className="bg-gradient-to-br from-purple-500 to-indigo-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
-                <BarChart3 className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Advanced Analytics</h3>
-              <p className="text-gray-600 mb-8 leading-relaxed text-center">
-                Access comprehensive environmental data, predictive modeling, and scientific research 
-                to understand climate patterns and make informed policy decisions with confidence.
-              </p>
-              <div className="bg-purple-50 rounded-2xl p-6 mb-6">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-purple-600">AI-Powered</div>
-                    <div className="text-sm text-gray-600">Predictions</div>
+              <div className="p-8 flex flex-col flex-grow">
+                <div className="bg-gradient-to-br from-purple-500 to-indigo-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <BarChart3 className="h-10 w-10 text-white" />
+                </div>
+                
+                <div className="text-center flex-grow flex flex-col">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Advanced Analytics</h3>
+                  <p className="text-gray-600 mb-8 leading-relaxed flex-grow">
+                    Access comprehensive environmental data, predictive modeling, and scientific research 
+                    to understand climate patterns and make informed policy decisions with confidence.
+                  </p>
+                  
+                  <div className="bg-purple-50 rounded-2xl p-6 mb-8">
+                    <div className="grid grid-cols-2 gap-4 text-center">
+                      <div>
+                        <div className="text-2xl font-bold text-purple-600">AI-Powered</div>
+                        <div className="text-sm text-gray-600">Predictions</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-purple-600">24/7</div>
+                        <div className="text-sm text-gray-600">Monitoring</div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-purple-600">24/7</div>
-                    <div className="text-sm text-gray-600">Monitoring</div>
-                  </div>
+                  
+                  <Link
+                    to="/register"
+                    className="group/link bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105 mt-auto"
+                  >
+                    <span>View Analytics</span>
+                    <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
-              <Link
-                to="/register"
-                className="group/link bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105"
-              >
-                <span>View Analytics</span>
-                <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
-              </Link>
             </motion.div>
           </div>
         </div>

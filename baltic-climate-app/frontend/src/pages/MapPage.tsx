@@ -17,6 +17,7 @@ import {
   ChevronRight,
   ChevronDown,
   ChevronUp,
+  CloudRain,
 } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -89,7 +90,7 @@ const CLIMATE_DATA_TYPES = [
   { key: 'temperature', label: 'Temperature', icon: <Thermometer size={18} /> },
   { key: 'humidity', label: 'Humidity', icon: <Droplets size={18} /> },
   { key: 'wind_speed', label: 'Wind Speed', icon: <Wind size={18} /> },
-  { key: 'precipitation', label: 'Precipitation', icon: <Droplets size={18} /> },
+  { key: 'precipitation', label: 'Precipitation', icon: <CloudRain size={18} /> },
 ];
 
 // Helpers
@@ -357,14 +358,14 @@ const MapPage: React.FC = () => {
 
   if (loading) {
     return (
-        <div className="h-screen w-screen flex items-center justify-center pt-16">
+        <div className="h-screen w-screen flex items-center justify-center pt-20">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600" />
         </div>
     );
   }
 
   return (
-      <div className="h-screen w-screen overflow-hidden relative pt-16">
+      <div className="h-screen w-screen overflow-hidden relative pt-20">
         {/* Floating control panel */}
         <div
             className={`absolute top-40 left-4 z-[1000] bg-white border border-gray-300 shadow-lg 
@@ -530,7 +531,7 @@ const MapPage: React.FC = () => {
                           <span>Wind: {d.wind_speed} km/h</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <Droplets className="h-4 w-4" />
+                          <CloudRain className="h-4 w-4" />
                           <span>Precip: {d.precipitation} mm</span>
                         </div>
                         <div className="text-xs text-gray-500 pt-1">
@@ -546,9 +547,17 @@ const MapPage: React.FC = () => {
           {showActions &&
               callForActions
                   .filter((action) => selectedActionTypes.includes(action.type))
-                  .map((a, idx) => (
-                      <CallForActionMarker key={`action-${idx}`} action={a} />
-                  ))}
+                  .map((a, idx) => {
+                    // Find the original index of this action in the full callForActions array
+                    const originalIndex = callForActions.findIndex(action => action === a);
+                    return (
+                        <CallForActionMarker 
+                          key={`action-${originalIndex}`} 
+                          action={a} 
+                          actionIndex={originalIndex}
+                        />
+                    );
+                  })}
 
           {/* Sea-level rise heat-map */}
           <HeatmapLayer
@@ -582,7 +591,7 @@ const MapPage: React.FC = () => {
 
         {/* Legend */}
         <div
-            className="absolute bottom-4 right-4 z-[1000] max-w-sm bg-white/90 backdrop-blur
+            className="absolute bottom-8 right-4 z-[1000] max-w-sm bg-white/90 backdrop-blur
                    border border-gray-300 p-4 text-xs leading-snug"
         >
           <Legend
