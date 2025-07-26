@@ -13,6 +13,7 @@ export interface CallForAction {
     lat: number;
     lng: number;
     image?: string;
+    location: string;
 }
 
 // List of upcoming calls for action. Dates are in 2025 and chosen to
@@ -28,6 +29,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Seminar',
         name: 'Baltic Youth Waves for Democracy 2025',
+        location:  'Gdańsk/Spot', 
         organizer: 'CBSS - Council of the Baltic Sea States',
         dateStart: '2025-09-15',
         dateEnd: '2025-09-19',
@@ -39,6 +41,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Virtual',
         name: 'VisBaltic - Visualising Climate Risks and Solutions',
+        location: 'Luebeck',
         organizer: 'CBSS - Council of the Baltic Sea States',
         dateStart: '2025-07-24',
         dateEnd: '2025-07-27',
@@ -50,6 +53,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Science', // Hackathon → Science
         name: 'Copenhagen Flood Resilience Hackathon',
+        location: 'Copenhagen',
         organizer: 'Danish Climate Lab',
         dateStart: '2025-09-20',
         dateEnd: '2025-09-21',
@@ -61,6 +65,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop',
         name: 'Tallinn Urban Heat Workshop',
+        location: 'Tallinn',
         organizer: 'Estonian Green Building Council',
         dateStart: '2025-08-22',
         dateEnd: '2025-08-23',
@@ -72,6 +77,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Training',
         name: 'Helsinki Heatwave Response Training',
+        location: 'Helsinki',
         organizer: 'Finnish Red Cross',
         dateStart: '2025-08-25',
         dateEnd: '2025-08-25',
@@ -83,6 +89,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Cleanup',
         name: 'Kiel Bay Coastal Cleanup',
+        location: 'Kiel', 
         organizer: 'Kiel University Sustainability Initiative',
         dateStart: '2025-09-05',
         dateEnd: '2025-09-05',
@@ -94,6 +101,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop', // Festival → Workshop
         name: 'Reykjavík Climate Awareness Festival',
+        location: 'Reykjavík', 
         organizer: 'Icelandic Youth Environmental Association',
         dateStart: '2025-08-15',
         dateEnd: '2025-08-17',
@@ -105,6 +113,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Seminar', // stays Seminar
         name: 'Riga Urban Heat Seminar',
+        location: 'Riga', 
         organizer: 'Latvian Environmental Protection Club',
         dateStart: '2025-09-10',
         dateEnd: '2025-09-10',
@@ -116,6 +125,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop',
         name: 'Klaipėda Coastal Defence Workshop',
+        location: 'Klaipėda',
         organizer: 'Lithuanian Coastal Research Institute',
         dateStart: '2025-09-18',
         dateEnd: '2025-09-19',
@@ -127,6 +137,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Training',
         name: 'Bergen Rainfall Preparedness Drill',
+        location: 'Bergen', 
         organizer: 'Norwegian Directorate for Civil Protection',
         dateStart: '2025-08-27',
         dateEnd: '2025-08-28',
@@ -138,6 +149,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Cleanup',
         name: 'Gdańsk Erosion Awareness Day',
+        location: 'Gdańsk', 
         organizer: 'Polish Coastal Protection Fund',
         dateStart: '2025-09-02',
         dateEnd: '2025-09-02',
@@ -149,6 +161,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop', // Festival → Workshop
         name: 'Stockholm Heat Island Solutions Fair',
+        location: 'Stockholm', 
         organizer: 'Swedish Environment Agency',
         dateStart: '2025-10-05',
         dateEnd: '2025-10-06',
@@ -160,6 +173,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Seminar', // Summit → Seminar
         name: 'Baltic Coastal Resilience Summit',
+        location: 'Turku',
         organizer: 'Council of the Baltic Sea States',
         dateStart: '2025-11-05',
         dateEnd: '2025-11-07',
@@ -171,6 +185,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Protest', // stays Protest
         name: 'Oslo Climate Justice Protest',
+        location: 'Oslo', 
         organizer: 'Nordic Youth for Climate',
         dateStart: '2025-09-20',
         dateEnd: '2025-09-20',
@@ -183,6 +198,7 @@ const _baseCallForActions: CallForAction[] = [
         type: 'Workshop',
         name: 'Odense Flood Preparedness Workshop',
         organizer: 'Odense Environmental Network',
+        location: 'Odense', 
         dateStart: '2025-10-12',
         dateEnd: '2025-10-12',
         description: 'Hands‑on training in sandbagging, emergency kits and flood barrier construction for residents of the Odense region.',
@@ -193,6 +209,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop', // Buildathon → Workshop
         name: 'Tartu Green Roof Buildathon',
+        location: 'Tartu', 
         organizer: 'Tartu University Environmental Club',
         dateStart: '2025-09-15',
         dateEnd: '2025-09-16',
@@ -204,6 +221,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Training',
         name: 'Oulu Heatwave Response Drill',
+        location: 'Oulu',
         organizer: 'Finnish Civil Defence',
         dateStart: '2025-08-30',
         dateEnd: '2025-08-30',
@@ -215,6 +233,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Cleanup',
         name: 'Hamburg Dune Restoration Day',
+        location：'Hamburg',
         organizer: 'Hamburg Coastal Friends',
         dateStart: '2025-09-12',
         dateEnd: '2025-09-12',
@@ -226,6 +245,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop', // Camp → Workshop
         name: 'Akureyri Climate Youth Camp',
+        location: 'Akureyri',
         organizer: 'Icelandic Youth Environmental Association',
         dateStart: '2025-08-22',
         dateEnd: '2025-08-24',
@@ -237,6 +257,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop', // Fair → Workshop
         name: 'Liepaja Heat Health Fair',
+        location: 'Liepaja',
         organizer: 'Latvian Red Cross',
         dateStart: '2025-08-29',
         dateEnd: '2025-08-29',
@@ -248,6 +269,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Seminar', // Summit → Seminar
         name: 'Neringa Flood & Tourism Summit',
+        location :'Neringa', 
         organizer: 'Lithuanian Coastal Tourism Association',
         dateStart: '2025-10-10',
         dateEnd: '2025-10-11',
@@ -259,6 +281,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Workshop',
         name: 'Trondheim Rain Garden Workshop',
+        location: 'Trondheim',
         organizer: 'Norwegian University of Science and Technology',
         dateStart: '2025-09-07',
         dateEnd: '2025-09-07',
@@ -270,6 +293,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Seminar', // Forum → Seminar
         name: 'Szczecin Coastal Defence Forum',
+        location: 'Szczecin',
         organizer: 'West Pomeranian Marine Institute',
         dateStart: '2025-09-18',
         dateEnd: '2025-09-19',
@@ -282,6 +306,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Seminar', // Roundtable → Seminar
         name: 'Åland Sea‑Level Roundtable',
+        location: 'Åland',
         organizer: 'Åland Islands Environment Institute',
         dateStart: '2025-09-30',
         dateEnd: '2025-10-01',
