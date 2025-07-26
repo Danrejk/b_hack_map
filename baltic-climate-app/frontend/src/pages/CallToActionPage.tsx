@@ -38,6 +38,7 @@ interface ClimateAction {
   lat: number;
   lng: number;
   image?: string;
+  location?: string;
 }
 
 const CallToActionPage: React.FC = () => {
@@ -80,7 +81,8 @@ const CallToActionPage: React.FC = () => {
         description: action.description,
         lat: action.lat,
         lng: action.lng,
-        image: action.image
+        image: action.image,
+        location: action.location
       }));
       
       setActions(convertedActions);
@@ -464,7 +466,7 @@ const CallToActionPage: React.FC = () => {
                           <div className="flex-1">
                             <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Location</div>
                             <div className="font-semibold text-sm text-gray-900">
-                              Lat: {action.lat.toFixed(4)}, Lng: {action.lng.toFixed(4)}
+                              {action.location || 'Not specified'}
                             </div>
                           </div>
                         </div>

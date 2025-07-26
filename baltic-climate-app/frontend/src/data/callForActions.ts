@@ -233,7 +233,7 @@ const _baseCallForActions: CallForAction[] = [
     {
         type: 'Cleanup',
         name: 'Hamburg Dune Restoration Day',
-        location：'Hamburg',
+        location: 'Hamburg',
         organizer: 'Hamburg Coastal Friends',
         dateStart: '2025-09-12',
         dateEnd: '2025-09-12',
