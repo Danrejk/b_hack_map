@@ -22,7 +22,8 @@ import {
   Star,
   Eye,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  ChevronDown
 } from 'lucide-react';
 import { callForActions, CallForAction } from '../data/callForActions';
 
@@ -110,7 +111,10 @@ const CallToActionPage: React.FC = () => {
       'cleanup': 'Cleanup',
       'seminar': 'Seminar',
       'festival': 'Festival',
-      'training': 'Training'
+      'training': 'Training',
+      'virtual': 'Virtual Event',
+      'science': 'Science Initiative',
+      'hackathon': 'Hackathon'
     };
     return typeLabels[type.toLowerCase()] || type;
   };
@@ -122,7 +126,10 @@ const CallToActionPage: React.FC = () => {
       'cleanup': TreePine,
       'seminar': Users,
       'festival': Star,
-      'training': TrendingUp
+      'training': TrendingUp,
+      'virtual': Globe,
+      'science': Zap,
+      'hackathon': Waves
     };
     return icons[type.toLowerCase()] || Target;
   };
@@ -134,7 +141,10 @@ const CallToActionPage: React.FC = () => {
       'cleanup': 'from-green-500 to-teal-500',
       'seminar': 'from-blue-500 to-cyan-500',
       'festival': 'from-yellow-500 to-orange-500',
-      'training': 'from-indigo-500 to-purple-500'
+      'training': 'from-indigo-500 to-purple-500',
+      'virtual': 'from-cyan-500 to-blue-500',
+      'science': 'from-violet-500 to-purple-500',
+      'hackathon': 'from-pink-500 to-rose-500'
     };
     return colors[type.toLowerCase()] || 'from-blue-500 to-cyan-500';
   };
@@ -321,7 +331,7 @@ const CallToActionPage: React.FC = () => {
                   <select
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value)}
-                    className="block w-full px-4 py-4 border-2 border-blue-200 bg-white/80 rounded-2xl focus:outline-none focus:border-blue-400 focus:ring-0 font-medium transition-colors duration-300 min-w-40"
+                    className="block w-full pl-4 pr-10 py-4 border-2 border-blue-200 bg-white/80 rounded-2xl focus:outline-none focus:border-blue-400 focus:ring-0 font-medium transition-colors duration-300 min-w-40 appearance-none cursor-pointer"
                   >
                     <option value="all">All Types</option>
                     <option value="workshop">Workshops</option>
@@ -331,19 +341,25 @@ const CallToActionPage: React.FC = () => {
                     <option value="festival">Festivals</option>
                     <option value="training">Training</option>
                   </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <ChevronDown className="h-5 w-5 text-blue-400" />
+                  </div>
                 </div>
 
                 <div className="relative">
                   <select
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
-                    className="block w-full px-4 py-4 border-2 border-blue-200 bg-white/80 rounded-2xl focus:outline-none focus:border-blue-400 focus:ring-0 font-medium transition-colors duration-300 min-w-40"
+                    className="block w-full pl-4 pr-10 py-4 border-2 border-blue-200 bg-white/80 rounded-2xl focus:outline-none focus:border-blue-400 focus:ring-0 font-medium transition-colors duration-300 min-w-40 appearance-none cursor-pointer"
                   >
                     <option value="all">All Status</option>
                     <option value="upcoming">Upcoming</option>
                     <option value="ongoing">Ongoing</option>
                     <option value="completed">Completed</option>
                   </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <ChevronDown className="h-5 w-5 text-blue-400" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -440,40 +456,49 @@ const CallToActionPage: React.FC = () => {
                       </p>
 
                       {/* Enhanced Meta Information */}
-                      <div className="space-y-3 mb-6">
+                      <div className="space-y-4 mb-6">
                         <div className="flex items-center text-gray-600">
-                          <div className="bg-blue-100 p-2 rounded-xl mr-3">
+                          <div className="bg-blue-100 p-2.5 rounded-xl mr-4 flex-shrink-0">
                             <MapPin className="h-4 w-4 text-blue-600" />
                           </div>
-                          <span className="font-medium text-sm">
-                            Lat: {action.lat}, Lng: {action.lng}
-                          </span>
+                          <div className="flex-1">
+                            <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Location</div>
+                            <div className="font-semibold text-sm text-gray-900">
+                              Lat: {action.lat.toFixed(4)}, Lng: {action.lng.toFixed(4)}
+                            </div>
+                          </div>
                         </div>
                         
                         <div className="flex items-center text-gray-600">
-                          <div className="bg-green-100 p-2 rounded-xl mr-3">
+                          <div className="bg-green-100 p-2.5 rounded-xl mr-4 flex-shrink-0">
                             <Calendar className="h-4 w-4 text-green-600" />
                           </div>
-                          <span className="font-medium text-sm">
-                            {getDateRange(action.dateStart, action.dateEnd)}
-                          </span>
+                          <div className="flex-1">
+                            <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Event Date</div>
+                            <div className="font-semibold text-sm text-gray-900">
+                              {getDateRange(action.dateStart, action.dateEnd)}
+                            </div>
+                          </div>
                         </div>
                         
                         <div className="flex items-center text-gray-600">
-                          <div className="bg-purple-100 p-2 rounded-xl mr-3">
+                          <div className="bg-purple-100 p-2.5 rounded-xl mr-4 flex-shrink-0">
                             <Users className="h-4 w-4 text-purple-600" />
                           </div>
-                          <span className="font-medium text-sm">
-                            By {action.organizer}
-                          </span>
+                          <div className="flex-1">
+                            <div className="text-xs text-gray-500 font-medium uppercase tracking-wide">Organizer</div>
+                            <div className="font-semibold text-sm text-gray-900 truncate">
+                              {action.organizer}
+                            </div>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Action Buttons */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      {/* Enhanced Action Buttons */}
+                      <div className="flex flex-col sm:flex-row items-center gap-3 pt-6 border-t border-gray-100">
                         <Link
                           to={`/action/${action.id}`}
-                          className="group/link flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-300"
+                          className="group/link flex items-center justify-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-300 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-xl flex-1 sm:flex-none"
                         >
                           <Eye className="h-4 w-4" />
                           <span>View Details</span>
@@ -483,17 +508,17 @@ const CallToActionPage: React.FC = () => {
                         {isAuthenticated ? (
                           <motion.button 
                             onClick={() => handleJoinAction(action.id)}
-                            className="bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+                            className="flex items-center justify-center space-x-2 bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex-1 sm:flex-none"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                           >
                             <Zap className="h-4 w-4" />
-                            <span>Join</span>
+                            <span>Join Action</span>
                           </motion.button>
                         ) : (
                           <Link 
                             to="/login"
-                            className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+                            className="flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex-1 sm:flex-none"
                           >
                             <span>Login to Join</span>
                             <ArrowRight className="h-4 w-4" />

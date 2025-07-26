@@ -57,8 +57,61 @@ const CreateActionPage: React.FC = () => {
     if (error) setError('');
   };
 
+  const validateStep = (stepNumber: number): boolean => {
+    switch (stepNumber) {
+      case 1:
+        if (!formData.title.trim()) {
+          setError('Action title is required');
+          return false;
+        }
+        if (!formData.description.trim()) {
+          setError('Action description is required');
+          return false;
+        }
+        if (!formData.action_type) {
+          setError('Action type is required');
+          return false;
+        }
+        break;
+      case 2:
+        if (!formData.organization_name.trim()) {
+          setError('Organization name is required');
+          return false;
+        }
+        if (!formData.location_name.trim()) {
+          setError('Location name is required');
+          return false;
+        }
+        if (!formData.city.trim()) {
+          setError('City is required');
+          return false;
+        }
+        if (!formData.country.trim()) {
+          setError('Country is required');
+          return false;
+        }
+        break;
+      case 3:
+        if (!formData.start_date) {
+          setError('Start date is required');
+          return false;
+        }
+        if (!formData.end_date) {
+          setError('End date is required');
+          return false;
+        }
+        if (new Date(formData.start_date) > new Date(formData.end_date)) {
+          setError('End date must be after start date');
+          return false;
+        }
+        break;
+    }
+    setError('');
+    return true;
+  };
+
   const nextStep = () => {
-    if (step < totalSteps) {
+    if (validateStep(step) && step < totalSteps) {
       setStep(step + 1);
     }
   };
@@ -66,6 +119,7 @@ const CreateActionPage: React.FC = () => {
   const prevStep = () => {
     if (step > 1) {
       setStep(step - 1);
+      setError(''); // Clear errors when going back
     }
   };
 
@@ -169,23 +223,40 @@ const CreateActionPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Progress Indicator */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-blue-100 shadow-lg mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-semibold text-gray-600">Progress</span>
-                <span className="text-sm font-semibold text-blue-600">{step} of {totalSteps}</span>
-              </div>
-              <div className="relative">
-                <div className="overflow-hidden h-2 text-xs flex rounded-full bg-blue-100">
-                  <motion.div 
-                    className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-blue-600 to-cyan-600"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(step / totalSteps) * 100}%` }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                  />
+            {/* Enhanced Progress Indicator */}
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 border border-blue-100 shadow-xl mb-8">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">Create Your Climate Action</h3>
+                  <p className="text-sm text-gray-600 mt-1">Step {step} of {totalSteps}</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-blue-600">{Math.round((step / totalSteps) * 100)}%</div>
+                  <div className="text-xs text-gray-500">Complete</div>
                 </div>
               </div>
-              <div className="flex justify-between mt-4">
+              
+              {/* Enhanced Progress Bar */}
+              <div className="relative mb-6">
+                <div className="overflow-hidden h-3 text-xs flex rounded-full bg-gradient-to-r from-gray-100 to-blue-50">
+                  <motion.div 
+                    className="shadow-lg flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${(step / totalSteps) * 100}%` }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                  />
+                </div>
+                {/* Progress Glow Effect */}
+                <motion.div
+                  className="absolute top-0 left-0 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-50 blur-sm"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(step / totalSteps) * 100}%` }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                />
+              </div>
+              
+              {/* Enhanced Step Indicators */}
+              <div className="flex justify-between">
                 {Array.from({ length: totalSteps }, (_, i) => {
                   const stepNumber = i + 1;
                   const StepIcon = getStepIcon(stepNumber);
@@ -193,20 +264,54 @@ const CreateActionPage: React.FC = () => {
                   const isCompleted = stepNumber < step;
                   
                   return (
-                    <div key={stepNumber} className="flex flex-col items-center">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                        isActive ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg scale-110' :
-                        isCompleted ? 'bg-green-500 text-white' :
-                        'bg-gray-200 text-gray-500'
-                      }`}>
-                        {isCompleted ? <CheckCircle className="h-5 w-5" /> : <StepIcon className="h-5 w-5" />}
+                    <motion.div 
+                      key={stepNumber} 
+                      className="flex flex-col items-center flex-1"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: stepNumber * 0.1 }}
+                    >
+                      <motion.div 
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                          isActive ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-xl scale-110' :
+                          isCompleted ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg' :
+                          'bg-gray-100 text-gray-400 border-2 border-gray-200'
+                        }`}
+                        whileHover={{ scale: isActive ? 1.15 : 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {isCompleted ? (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <CheckCircle className="h-6 w-6" />
+                          </motion.div>
+                        ) : (
+                          <StepIcon className="h-6 w-6" />
+                        )}
+                      </motion.div>
+                      <div className="text-center mt-3">
+                        <div className={`text-sm font-semibold ${
+                          isActive ? 'text-blue-600' : 
+                          isCompleted ? 'text-green-600' : 
+                          'text-gray-500'
+                        }`}>
+                          {getStepTitle(stepNumber)}
+                        </div>
+                        {isActive && (
+                          <motion.div
+                            className="text-xs text-blue-500 mt-1"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                          >
+                            Current Step
+                          </motion.div>
+                        )}
                       </div>
-                      <span className={`text-xs mt-2 font-medium ${
-                        isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-500'
-                      }`}>
-                        {getStepTitle(stepNumber)}
-                      </span>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
