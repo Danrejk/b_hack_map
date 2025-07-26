@@ -26,6 +26,7 @@ import { callForActions } from '../data/callForActions';
 import { seaLevelRiseData } from '../data/seaLevelRise';
 import CallForActionMarker from '../components/CallForActionMarker';
 import HeatmapLayer from '../components/HeatmapLayer';
+import MapClickHandler from '../components/MapClickHandler';
 
 // Leaflet default-marker fix
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -510,6 +511,9 @@ const MapPage: React.FC = () => {
               data={seaLevelRiseData.map((p) => [p.lat, p.lng, normalizeSeaLevelRise(p.value)])}
               visible={showSeaLevelRise}
           />
+
+          {/* Climate Risk Click Handler */}
+          <MapClickHandler highlightFeature={highlightFeature} />
         </MapContainer>
 
         {/* Legend */}

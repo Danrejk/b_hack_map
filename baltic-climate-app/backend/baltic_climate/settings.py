@@ -183,3 +183,6 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Email Configuration (for production)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# AI Service Configuration
+AI_SERVICE_URL = config('AI_SERVICE_URL', default='http://localhost:3001')
