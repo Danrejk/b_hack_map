@@ -7,11 +7,9 @@ import {
   X, 
   User, 
   LogOut, 
-  Globe, 
-  MapPin, 
+  Globe,
   Target, 
   Home,
-  Waves,
   ChevronDown
 } from 'lucide-react';
 

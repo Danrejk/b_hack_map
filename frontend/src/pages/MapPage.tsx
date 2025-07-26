@@ -27,12 +27,10 @@ import { callForActions } from '../data/callForActions';
 import { seaLevelRiseData } from '../data/seaLevelRise';
 import {
   pollutionDangerData,
-  getPollutionDangerColor,
   getPollutionDangerIntensity,
 } from '../data/pollution';
 import {
   corrosionRiskData,
-  getCorrosionRiskColor,
   getCorrosionRiskIntensity,
 } from '../data/corrosion';
 import CallForActionMarker from '../components/CallForActionMarker';
