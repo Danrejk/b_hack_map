@@ -89,24 +89,17 @@ const Navbar: React.FC = () => {
             transition={{ duration: 0.2 }}
           >
             <Link to="/" className="flex items-center space-x-3 group" onClick={closeMenu}>
-              <div className="relative">
-                <motion.div
-                  className="bg-gradient-to-br from-blue-600 to-cyan-600 p-3 rounded-2xl shadow-lg group-hover:shadow-xl transition-shadow duration-300"
+              <motion.img
+                  src="/logo.jpeg"
+                  alt="VisBaltic Logo"
+                  className="h-10 w-10 object-cover"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.8 }}
-                >
-                  <Waves className="h-6 w-6 text-white" />
-                </motion.div>
-                <motion.div
-                  className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </div>
+              />
               <div className="flex flex-col">
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-900 to-cyan-600 bg-clip-text text-transparent">
-                  VisBaltic
-                </span>
+    <span className="text-2xl font-bold bg-gradient-to-r from-blue-900 to-cyan-600 bg-clip-text text-transparent">
+      VisBaltic
+    </span>
                 <span className="text-xs text-blue-600 font-medium -mt-1">Solutions Platform</span>
               </div>
             </Link>
