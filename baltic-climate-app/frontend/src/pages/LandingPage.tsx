@@ -20,53 +20,58 @@ import {
 } from 'lucide-react';
 
 // Success Stories Data
+// Success Stories Data
 const successStories = [
   {
     id: 1,
-    title: "Helsinki's Green Maritime Initiative",
-    description: "Finland reduced marine pollution by 60% through innovative waste management systems and community engagement.",
-    location: "Helsinki, Finland",
-    impact: "60% pollution reduction",
-    image: "🇫🇮",
-    stats: { reduction: "60%", timeframe: "2019-2024", participants: "50,000+" }
+    title: "Green Kayak: One Paddle at a Time",
+    description:
+        "Founded in Denmark and now active in multiple Baltic cities (Copenhagen, Helsinki, Stockholm, Gdańsk), Green Kayak empowers volunteers to rent kayaks for free by collecting rubbish as they paddle. By removing over 150,000kg of waste, the initiative fosters outdoor activity while raising awareness and stewardship of the Baltic waters.",
+    location: "Copenhagen, Denmark & Baltic cities",
+    impact: "150,000kg+ waste removed",
+    image: "/story1.jpeg",
+    countryEmoji: "🇩🇰",
+    stats: {
+      reduction: "150,000kg+ waste",
+      timeframe: "2017–2025",
+      participants: "Thousands of volunteers"
+    },
+    projectLink: "https://www.greenkayak.org/about-us/",
   },
   {
     id: 2,
-    title: "Stockholm's Blue Carbon Project",
-    description: "Sweden's capital successfully restored 500 hectares of coastal wetlands, creating natural carbon sinks.",
-    location: "Stockholm, Sweden",
-    impact: "500 hectares restored",
-    image: "🇸🇪",
-    stats: { reduction: "12,000 tons CO2", timeframe: "2020-2024", participants: "25 organizations" }
+    title: "MyForest: Latvia’s Urban Green Crown",
+    description:
+        "Citizens across Latvia, especially in Riga, reclaim climate action by collectively purchasing and reforesting land, creating new carbon sinks and habitats. Riga's urban forests, constituting 60,000+ hectares, are FSC certified and managed for recreation, biodiversity - providing clean air and easy nature access to over a million people.",
+    location: "Riga, Latvia",
+    impact: "60,000+ hectares of urban forest",
+    image: "/story2.jpeg",
+    countryEmoji: "🇱🇻",
+    stats: {
+      reduction: "FSC-certified lands",
+      timeframe: "2015–2025",
+      participants: "1M+ residents"
+    },
+    projectLink: "https://fsc.org/en/newscentre/general-news/urban-forest-of-the-baltic-states-largest-capital-now-certified"
   },
   {
     id: 3,
-    title: "Copenhagen's Smart Flood Defense",
-    description: "Denmark implemented AI-powered flood prediction systems, protecting 2 million residents from climate risks.",
-    location: "Copenhagen, Denmark",
-    impact: "2M people protected",
-    image: "🇩🇰",
-    stats: { reduction: "85% flood risk", timeframe: "2021-2024", participants: "15 municipalities" }
-  },
-  {
-    id: 4,
-    title: "Riga's Renewable Energy Transition",
-    description: "Latvia achieved 100% renewable energy for coastal operations, setting a model for the Baltic region.",
-    location: "Riga, Latvia",
-    impact: "100% renewable energy",
-    image: "🇱🇻",
-    stats: { reduction: "40,000 tons CO2", timeframe: "2018-2024", participants: "200+ businesses" }
-  },
-  {
-    id: 5,
-    title: "Tallinn's Digital Environmental Monitoring",
-    description: "Estonia deployed IoT sensors across the coastline, providing real-time environmental data to policymakers.",
-    location: "Tallinn, Estonia",
-    impact: "1000+ sensors deployed",
-    image: "🇪🇪",
-    stats: { reduction: "Real-time monitoring", timeframe: "2022-2024", participants: "8 research institutes" }
+    title: "Let’s Do It World: From Estonia to the Globe",
+    description:
+        "Starting in Estonia in 2008, Let’s Do It World saw 50,000 volunteers remove 10,000 tons of illegal waste in a single day. It evolved into World Cleanup Day, mobilizing tens of millions in nearly 200 countries yearly. The movement reduces illegal dumping and drives civic engagement from the Baltic to the world.",
+    location: "Tallinn, Estonia & Worldwide",
+    impact: "50,000+ Estonians, now global",
+    image: "/story3.jpeg",
+    countryEmoji: "🇪🇪",
+    stats: {
+      reduction: "10,000 tons waste",
+      timeframe: "2008–2025",
+      participants: "Millions globally"
+    },
+    projectLink: "https://letsdoitworld.org/"
   }
 ];
+
 
 const LandingPage: React.FC = () => {
   const [currentStory, setCurrentStory] = useState(0);
@@ -234,23 +239,33 @@ const LandingPage: React.FC = () => {
           {/* Carousel Container */}
           <div className="relative">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStory}
+              <a
+                  href={successStories[currentStory].projectLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block focus:outline-none"
+                  style={{ textDecoration: 'none' }}
+              >
+                <motion.div
+                    key={currentStory}
                 initial={{ opacity: 0, x: 300 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -300 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl"
-              >
+                    className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl cursor-pointer transition-transform hover:scale-105"
+                >
+
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                   {/* Story Content */}
                   <div className="text-white">
                     <div className="flex items-center mb-6">
-                      <span className="text-6xl mr-4">{successStories[currentStory].image}</span>
                       <div>
-                        <h3 className="text-3xl md:text-4xl font-bold mb-2">
+                        <h3 className="text-3xl md:text-4xl font-bold mb-2 flex items-center">
+                          <span className="mr-3" style={{ fontSize: '3rem', lineHeight: 1 }}>{successStories[currentStory].countryEmoji}</span>
                           {successStories[currentStory].title}
                         </h3>
+
+
                         <p className="text-blue-200 text-lg">{successStories[currentStory].location}</p>
                       </div>
                     </div>
@@ -285,17 +300,19 @@ const LandingPage: React.FC = () => {
                   </div>
 
                   {/* Visual Element */}
-                  <div className="relative">
-                    <div className="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl p-8 text-center transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                      <div className="text-6xl mb-4">{successStories[currentStory].image}</div>
-                      <div className="text-white font-bold text-2xl mb-2">
-                        {successStories[currentStory].impact}
-                      </div>
-                      <div className="text-white/90">Measurable Impact</div>
-                    </div>
+                  <div className="flex items-center justify-center">
+                    <img
+                        src={successStories[currentStory].image}
+                        alt={successStories[currentStory].title}
+                        className="rounded-3xl shadow-2xl w-full object-cover object-center"
+                        style={{ maxWidth: '480px', height: '28rem' }}
+                    />
+
+
                   </div>
                 </div>
-              </motion.div>
+                </motion.div>
+              </a>
             </AnimatePresence>
 
             {/* Carousel Controls */}
