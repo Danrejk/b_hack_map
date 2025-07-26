@@ -1,15 +1,18 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
+import { useNavigate } from 'react-router-dom';
 import L from 'leaflet';
 import { CallForAction } from '../data/callForActions';
 
 interface CallForActionMarkerProps {
   action: CallForAction;
+  actionIndex: number;
 }
 
-const CallForActionMarker: React.FC<CallForActionMarkerProps> = ({ action }) => {
+const CallForActionMarker: React.FC<CallForActionMarkerProps> = ({ action, actionIndex }) => {
   const position: LatLngExpression = [action.lat, action.lng];
+  const navigate = useNavigate();
 
   // Function to get marker color based on action type
   const getMarkerColor = (type: string): string => {
@@ -65,7 +68,7 @@ const CallForActionMarker: React.FC<CallForActionMarkerProps> = ({ action }) => 
   };
 
   const handleReadMore = () => {
-    alert(`Read more for: ${action.name}`);
+    navigate(`/action/${actionIndex + 1}`);
   };
 
   return (

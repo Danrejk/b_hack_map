@@ -56,12 +56,17 @@ const CallForActionMap: React.FC<CallForActionMapProps> = ({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & <a href="https://carto.com/attributions">CARTO</a>'
         />
         
-        {filteredActions.map((action, index) => (
-          <CallForActionMarker
-            key={`${action.lat}-${action.lng}-${index}`}
-            action={action}
-          />
-        ))}
+        {filteredActions.map((action, index) => {
+          // Find the original index of this action in the full callForActions array
+          const originalIndex = callForActions.findIndex(originalAction => originalAction === action);
+          return (
+            <CallForActionMarker
+              key={`${action.lat}-${action.lng}-${originalIndex}`}
+              action={action}
+              actionIndex={originalIndex}
+            />
+          );
+        })}
       </MapContainer>
     </div>
   );
